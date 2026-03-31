@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata = {
@@ -7,7 +6,11 @@ export const metadata = {
     "Versiune rafinata a paginii Poker Cluj, optimizata pentru mobil, tableta si desktop.",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="ro">
       <body>{children}</body>

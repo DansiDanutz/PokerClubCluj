@@ -318,6 +318,22 @@ select {
   border-color: rgba(245, 158, 11, 0.34);
 }
 
+.button--mini {
+  margin-top: 14px;
+  min-height: 42px;
+  padding: 0 16px;
+  justify-self: flex-start;
+  color: #fff2d6;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  box-shadow: 0 10px 24px rgba(245, 158, 11, 0.12);
+}
+
+.button--mini:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.18);
+}
+
 .hero__glow {
   position: absolute;
   border-radius: 999px;
@@ -344,6 +360,14 @@ select {
 
 .stats-band {
   padding: 12px 0 10px;
+}
+
+.poker-focus {
+  padding-top: 34px;
+}
+
+.history-section {
+  padding-top: 36px;
 }
 
 .stats-grid,
@@ -495,6 +519,41 @@ select {
   font-size: 2rem;
 }
 
+.country-card__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.country-card h3 {
+  color: var(--text);
+}
+
+.country-card__info {
+  margin-top: 16px;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid rgba(245, 158, 11, 0.24);
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--text);
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.country-card__info:hover {
+  transform: translateY(-1px);
+  border-color: rgba(245, 158, 11, 0.38);
+  background: rgba(245, 158, 11, 0.18);
+}
+
+.country-card__info:focus-visible {
+  outline: 2px solid rgba(245, 158, 11, 0.7);
+  outline-offset: 3px;
+}
+
 .feature-card h3,
 .metric-card h3,
 .country-card h3,
@@ -530,6 +589,165 @@ select {
 .budget-callout p,
 .letter-card p {
   margin: 12px 0 0;
+}
+
+.poker-focus__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.72fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.poker-prose-card,
+.poker-aside-card {
+  border-radius: 28px;
+  padding: 26px;
+}
+
+.poker-prose-card {
+  display: grid;
+  gap: 18px;
+}
+
+.poker-prose-block {
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.poker-prose-block:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.poker-prose-block h3,
+.poker-aside-card h3 {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.35;
+}
+
+.poker-prose-block p,
+.poker-aside-card p,
+.poker-aside-card__note {
+  margin: 12px 0 0;
+  color: var(--text-soft);
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+.poker-aside-card {
+  position: sticky;
+  top: 104px;
+  border: 1px solid rgba(245, 158, 11, 0.22);
+  background:
+    linear-gradient(180deg, rgba(245, 158, 11, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(15, 24, 39, 0.86);
+}
+
+.poker-aside-card__rate {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--gold);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.poker-aside-card__note {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.history-callout {
+  margin: 0 auto 22px;
+  max-width: 860px;
+  border-radius: 24px;
+  padding: 22px 24px;
+  text-align: center;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  background:
+    linear-gradient(180deg, rgba(245, 158, 11, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(15, 24, 39, 0.82);
+}
+
+.history-callout strong {
+  display: block;
+  color: var(--gold);
+  font-size: 1.05rem;
+}
+
+.history-callout p {
+  margin: 10px 0 0;
+  color: var(--text-soft);
+  line-height: 1.75;
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.history-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  padding: 22px;
+}
+
+.history-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -20% -65% auto;
+  width: 150px;
+  height: 150px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.14), transparent 70%);
+  pointer-events: none;
+}
+
+.history-card__year {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 68px;
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--gold);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.history-card h3 {
+  margin: 16px 0 0;
+  font-size: 1.08rem;
+  line-height: 1.35;
+}
+
+.history-card p {
+  margin: 12px 0 0;
+  color: var(--text-soft);
+  line-height: 1.75;
+  font-size: 0.94rem;
+}
+
+.history-card--featured {
+  border-color: rgba(245, 158, 11, 0.34);
+  background:
+    linear-gradient(180deg, rgba(245, 158, 11, 0.14), rgba(255, 255, 255, 0.03)),
+    rgba(15, 24, 39, 0.88);
+  box-shadow: 0 18px 40px rgba(245, 158, 11, 0.12);
+}
+
+.history-card--featured .history-card__year,
+.history-card--featured h3,
+.history-card--featured p {
+  color: #ffd27c;
 }
 
 .table-card {
@@ -616,6 +834,130 @@ select {
   font-size: 1rem;
 }
 
+.state-tax-callout {
+  margin: 0 auto 24px;
+  max-width: 920px;
+  border-radius: 24px;
+  padding: 24px 26px;
+  text-align: center;
+  border: 1px solid rgba(61, 214, 160, 0.22);
+  background:
+    linear-gradient(180deg, rgba(61, 214, 160, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(15, 24, 39, 0.84);
+  box-shadow: var(--shadow);
+}
+
+.state-tax-callout strong {
+  display: block;
+  color: var(--emerald);
+  font-size: 1.08rem;
+}
+
+.state-tax-callout p {
+  margin: 12px 0 0;
+  color: var(--text-soft);
+  line-height: 1.78;
+}
+
+.state-tax-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.state-tax-card {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 18px;
+  background: var(--panel);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+}
+
+.state-tax-card__year {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.state-tax-card strong {
+  display: block;
+  margin-top: 14px;
+  color: var(--text);
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+.state-tax-card span {
+  display: block;
+  margin-top: 8px;
+  color: var(--text-faint);
+  font-size: 0.88rem;
+}
+
+.difference-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.difference-card {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 24px;
+  background: var(--panel);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+}
+
+.difference-card--poker {
+  border-color: rgba(245, 158, 11, 0.24);
+  background:
+    linear-gradient(180deg, rgba(245, 158, 11, 0.1), rgba(255, 255, 255, 0.02)),
+    rgba(15, 24, 39, 0.84);
+}
+
+.difference-card--slots {
+  border-color: rgba(255, 106, 111, 0.2);
+  background:
+    linear-gradient(180deg, rgba(255, 106, 111, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(15, 24, 39, 0.84);
+}
+
+.difference-card h3 {
+  margin: 14px 0 0;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.difference-list {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.difference-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
 .country-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -682,6 +1024,19 @@ select {
   line-height: 1.55;
 }
 
+.result-card--featured {
+  border-color: rgba(255, 106, 111, 0.34);
+  background:
+    linear-gradient(180deg, rgba(255, 106, 111, 0.16), rgba(255, 255, 255, 0.03)),
+    rgba(15, 24, 39, 0.9);
+  box-shadow: 0 18px 40px rgba(255, 106, 111, 0.14);
+}
+
+.result-card--featured strong,
+.result-card--featured span {
+  color: #ff9ca0;
+}
+
 .risk-card {
   margin-top: 20px;
   border-radius: 24px;
@@ -723,7 +1078,7 @@ select {
 
 .tax-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
   margin-top: 20px;
 }
@@ -735,9 +1090,24 @@ select {
   background: rgba(255, 255, 255, 0.03);
 }
 
+.tax-card--featured {
+  border-color: rgba(245, 158, 11, 0.34);
+  background:
+    linear-gradient(180deg, rgba(245, 158, 11, 0.16), rgba(255, 255, 255, 0.03)),
+    rgba(15, 24, 39, 0.9);
+  box-shadow: 0 18px 40px rgba(245, 158, 11, 0.12);
+}
+
+.tax-card--featured h4,
+.tax-card--featured em,
+.tax-card--featured span {
+  color: #ffe1a6;
+}
+
 .tax-card h4 {
   margin: 0;
   font-size: 0.95rem;
+  white-space: pre-line;
 }
 
 .tax-card strong {
@@ -746,6 +1116,15 @@ select {
   color: var(--gold);
   font-size: 1.6rem;
   font-weight: 800;
+}
+
+.tax-card em {
+  display: block;
+  margin-top: 8px;
+  color: var(--text);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
 .tax-card span {
@@ -771,14 +1150,208 @@ select {
   font-size: 1.05rem;
 }
 
+.letter-frame {
+  display: grid;
+  place-items: center;
+}
+
 .letter-card {
-  border-radius: 28px;
-  padding: 28px;
+  width: min(760px, 100%);
+  min-height: min(1080px, 100%);
+  border-radius: 32px;
+  padding: 44px 46px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 242, 231, 0.94)),
+    #f7f1e6;
+  border: 1px solid rgba(245, 158, 11, 0.18);
+  box-shadow:
+    0 36px 110px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  color: #2a2016;
+}
+
+.letter-head {
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(42, 32, 22, 0.12);
+}
+
+.letter-head__eyebrow {
+  color: #9f6f1c;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.letter-head h3 {
+  margin: 14px 0 0;
+  color: #20160d;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.letter-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: 18px;
+  color: #7b6652;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.letter-meta span {
+  position: relative;
+}
+
+.letter-meta span:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -11px;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(123, 102, 82, 0.45);
+  transform: translateY(-50%);
+}
+
+.letter-body {
+  padding: 28px 0 0;
+}
+
+.letter-body p,
+.letter-footer p {
+  margin: 0;
+  color: #3e3024;
+  font-size: 1.02rem;
+  line-height: 1.95;
+}
+
+.letter-body p + p {
+  margin-top: 18px;
+}
+
+.letter-salutation {
+  color: #24180f;
+  font-weight: 800;
 }
 
 .letter-card__accent {
+  margin-top: 22px;
+  padding: 18px 20px;
+  border-left: 4px solid rgba(245, 158, 11, 0.72);
+  border-radius: 16px;
+  background: rgba(245, 158, 11, 0.08);
+  color: #24180f;
+  font-weight: 800;
+}
+
+.letter-footer {
+  margin-top: 34px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(42, 32, 22, 0.12);
+}
+
+.letter-signatures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.letter-signature {
+  padding: 18px 18px 16px;
+  border-radius: 18px;
+  background: rgba(32, 22, 13, 0.04);
+  border: 1px solid rgba(42, 32, 22, 0.08);
+}
+
+.letter-signature strong {
+  display: block;
+  color: #20160d;
+  font-size: 1rem;
+}
+
+.letter-signature span {
+  display: block;
+  margin-top: 8px;
+  color: #7b6652;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.inline-alert {
+  color: var(--red);
+  font-weight: 800;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(5, 10, 18, 0.78);
+  backdrop-filter: blur(12px);
+}
+
+.country-modal {
+  position: relative;
+  width: min(680px, 100%);
+  max-height: min(82vh, 760px);
+  border: 1px solid rgba(245, 158, 11, 0.22);
+  border-radius: 28px;
+  padding: 28px;
+  background:
+    linear-gradient(180deg, rgba(245, 158, 11, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(15, 24, 39, 0.96);
+  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.42);
+  overflow-y: auto;
+}
+
+.country-modal--compact {
+  width: min(560px, 100%);
+}
+
+.country-modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text);
-  font-weight: 700;
+  cursor: pointer;
+}
+
+.country-modal__flag {
+  display: inline-grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: rgba(245, 158, 11, 0.12);
+  font-size: 2.1rem;
+}
+
+.country-modal h3 {
+  margin: 18px 0 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+}
+
+.country-modal p {
+  margin: 16px 0 0;
+  color: var(--text-soft);
+  line-height: 1.85;
+  font-size: 1rem;
+  white-space: pre-line;
 }
 
 .reveal {
@@ -800,7 +1373,8 @@ select {
 
 @media (max-width: 1120px) {
   .hero__content,
-  .danger-layout {
+  .danger-layout,
+  .poker-focus__layout {
     grid-template-columns: 1fr;
   }
 
@@ -809,9 +1383,15 @@ select {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .state-tax-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .country-grid,
   .tax-grid,
-  .contribution-grid {
+  .contribution-grid,
+  .history-grid,
+  .difference-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -841,6 +1421,8 @@ select {
 
   .hero__panel,
   .hero__summary,
+  .poker-prose-card,
+  .poker-aside-card,
   .table-card,
   .danger-panel,
   .risk-card,
@@ -865,10 +1447,13 @@ select {
   .stats-grid,
   .feature-grid,
   .contribution-grid,
+  .state-tax-grid,
   .country-grid,
   .impact-grid,
   .result-grid,
-  .tax-grid {
+  .tax-grid,
+  .history-grid,
+  .difference-grid {
     grid-template-columns: 1fr;
   }
 
@@ -890,10 +1475,51 @@ select {
     height: 56px;
   }
 
+  .country-card__header {
+    align-items: flex-start;
+  }
+
   .danger-row,
   .danger-total {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .poker-aside-card {
+    position: static;
+  }
+
+  .country-modal {
+    width: min(100%, 100%);
+    max-height: 84vh;
+    padding: 22px;
+    border-radius: 22px;
+  }
+
+  .country-modal p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .letter-card {
+    width: 100%;
+    min-height: auto;
+    padding: 28px 22px;
+    border-radius: 24px;
+  }
+
+  .letter-signatures {
+    grid-template-columns: 1fr;
+  }
+
+  .letter-head h3 {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+  }
+
+  .letter-body p,
+  .letter-footer p {
+    font-size: 0.98rem;
+    line-height: 1.82;
   }
 }
 
