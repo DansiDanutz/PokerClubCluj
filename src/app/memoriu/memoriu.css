@@ -59,6 +59,34 @@
   color: var(--text-faint);
 }
 
+.memoriu-share {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.memoriu-share a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.memoriu-share a:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+
 /* Signature card */
 
 .sig-card {
@@ -306,6 +334,14 @@
   border-collapse: collapse;
   font-size: 0.85rem;
   margin: 1.1rem 0;
+}
+
+@media (max-width: 719px) {
+  .memoriu-dark .memoriu-doc table {
+    display: block;
+    overflow-x: auto;
+    white-space: normal;
+  }
 }
 
 .memoriu-doc th,

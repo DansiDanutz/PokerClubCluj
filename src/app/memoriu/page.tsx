@@ -2,10 +2,20 @@ import MemoriuDocument from "./document";
 import SignatureForm from "./signature-form";
 import "./memoriu.css";
 
+const PAGE_URL = "https://poker-club-cluj.vercel.app/memoriu";
+
 export const metadata = {
   title: "Memoriu — Exceptarea cluburilor de poker | Consultare publică Cluj-Napoca",
   description:
     "Memoriu depus in consultarea publica (1-15 iulie 2026) privind proiectul de interzicere a jocurilor de noroc in Cluj-Napoca: jocurile intre participanti (loto si cluburile de poker) trebuie tratate distinct de sloturi si cazinouri. Semneaza si tu.",
+  openGraph: {
+    title: "Semnează memoriul: pokerul nu e păcănele",
+    description:
+      "Consultare publică Cluj-Napoca, 1-15 iulie 2026. Jocurile dintre participanti (loto si cluburile de poker) trebuie tratate distinct de sloturi si cazinouri. Semneaza memoriul catre Consiliul Local.",
+    url: PAGE_URL,
+    type: "website",
+    locale: "ro_RO",
+  },
 };
 
 export default function MemoriuPage() {
@@ -53,6 +63,31 @@ export default function MemoriuPage() {
           <a href="#semneaza" className="button button--primary">
             Semnează memoriul
           </a>
+          <div className="memoriu-share">
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(PAGE_URL)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📢 Distribuie pe Facebook
+            </a>
+            <a
+              href={`https://wa.me/?text=${encodeURIComponent(
+                "Semnează memoriul pentru Player's Poker Club Cluj: " + PAGE_URL
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              💬 Trimite pe WhatsApp
+            </a>
+            <a
+              href="https://www.facebook.com/PlayersPokerCluj/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ♠ Pagina clubului
+            </a>
+          </div>
           <p>
             Memoriul va fi depus oficial la Primăria Municipiului Cluj-Napoca
             împreună cu lista semnatarilor.
