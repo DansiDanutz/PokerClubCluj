@@ -1,0 +1,464 @@
+/* Page shell for /memoriu (uses site tokens from globals.css) */
+
+.memoriu-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 16px 80px;
+}
+
+.memoriu-deadline {
+  border: 1px solid rgba(255, 106, 111, 0.35);
+  background: rgba(255, 106, 111, 0.08);
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.memoriu-deadline__label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+
+.memoriu-deadline p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+}
+
+.memoriu-sign {
+  margin-bottom: 36px;
+}
+
+.memoriu-panel {
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 34px 28px;
+  box-shadow: var(--shadow);
+}
+
+@media (min-width: 720px) {
+  .memoriu-panel {
+    padding: 48px 56px;
+  }
+}
+
+.memoriu-cta {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.memoriu-cta p {
+  margin-top: 14px;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+
+/* Signature card */
+
+.sig-card {
+  background: var(--panel-strong);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  box-shadow: var(--shadow);
+}
+
+.sig-counter {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.sig-counter__value {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1.1;
+}
+
+.sig-counter__label {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  margin-top: 4px;
+}
+
+.sig-form {
+  display: grid;
+  gap: 12px;
+}
+
+.sig-form__row {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .sig-form__row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.sig-input {
+  width: 100%;
+  border-radius: 12px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  padding: 13px 16px;
+  font-size: 0.9rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 160ms ease;
+}
+
+.sig-input::placeholder {
+  color: var(--text-faint);
+}
+
+.sig-input:focus {
+  border-color: var(--line-strong);
+}
+
+.sig-input--area {
+  resize: none;
+}
+
+.sig-honeypot {
+  display: none;
+}
+
+.sig-error {
+  border: 1px solid rgba(255, 106, 111, 0.35);
+  background: rgba(255, 106, 111, 0.1);
+  color: var(--red);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+}
+
+.sig-submit {
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.sig-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.sig-consent {
+  margin: 2px 0 0;
+  font-size: 0.7rem;
+  line-height: 1.6;
+  color: var(--text-faint);
+}
+
+.sig-success {
+  border: 1px solid rgba(61, 214, 160, 0.35);
+  background: rgba(61, 214, 160, 0.08);
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+  text-align: center;
+}
+
+.sig-success__title {
+  font-weight: 800;
+  color: var(--emerald);
+  margin-bottom: 6px;
+}
+
+.sig-success p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--text-soft);
+}
+
+.sig-recent {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.sig-recent__title {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 12px;
+}
+
+.sig-recent__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sig-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  color: var(--text-soft);
+}
+
+.sig-chip__icon {
+  color: var(--gold);
+}
+
+.sig-chip__city {
+  color: var(--text-faint);
+}
+
+/* Shared document styles: .memoriu-doc is semantic; the wrapper decides the theme. */
+
+.memoriu-doc {
+  line-height: 1.7;
+}
+
+.memoriu-doc .doc-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.memoriu-doc .doc-kicker {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.memoriu-doc h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.35;
+  margin-bottom: 0.75rem;
+}
+
+.memoriu-doc .doc-subject {
+  font-size: 0.95rem;
+  font-style: italic;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.memoriu-doc h2 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-top: 2.25rem;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.4rem;
+}
+
+.memoriu-doc h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-top: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.memoriu-doc p,
+.memoriu-doc li {
+  font-size: 0.92rem;
+  margin-bottom: 0.85rem;
+}
+
+.memoriu-doc ul,
+.memoriu-doc ol {
+  padding-left: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.memoriu-doc ul {
+  list-style: disc;
+}
+
+.memoriu-doc ol {
+  list-style: decimal;
+}
+
+.memoriu-doc li {
+  margin-bottom: 0.5rem;
+}
+
+.memoriu-doc blockquote {
+  border-left: 3px solid;
+  padding: 0.75rem 1.1rem;
+  margin: 1.1rem 0;
+  font-size: 0.9rem;
+  font-style: italic;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.memoriu-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin: 1.1rem 0;
+}
+
+.memoriu-doc th,
+.memoriu-doc td {
+  text-align: left;
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid;
+  vertical-align: top;
+}
+
+.memoriu-doc .doc-sources {
+  margin-top: 2rem;
+  font-size: 0.75rem;
+}
+
+.memoriu-doc .doc-sources li {
+  font-size: 0.75rem;
+  margin-bottom: 0.3rem;
+  word-break: break-word;
+}
+
+.memoriu-doc .doc-signatures {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  text-align: center;
+}
+
+.memoriu-doc .doc-signatures .sig-name {
+  font-weight: 800;
+  margin-bottom: 0.15rem;
+}
+
+.memoriu-doc .doc-signatures .sig-role {
+  font-size: 0.8rem;
+}
+
+/* ---------- Dark theme (web) ---------- */
+
+.memoriu-dark .memoriu-doc {
+  color: #d4d4d8;
+}
+
+.memoriu-dark .memoriu-doc .doc-kicker {
+  color: #f59e0b;
+}
+
+.memoriu-dark .memoriu-doc h1,
+.memoriu-dark .memoriu-doc h2,
+.memoriu-dark .memoriu-doc h3,
+.memoriu-dark .memoriu-doc .doc-signatures .sig-name {
+  color: #ffffff;
+}
+
+.memoriu-dark .memoriu-doc h2 {
+  border-bottom: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.memoriu-dark .memoriu-doc strong {
+  color: #ffffff;
+}
+
+.memoriu-dark .memoriu-doc blockquote {
+  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.06);
+  color: #e4e4e7;
+}
+
+.memoriu-dark .memoriu-doc th {
+  color: #f59e0b;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.memoriu-dark .memoriu-doc td {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.memoriu-dark .memoriu-doc .doc-subject,
+.memoriu-dark .memoriu-doc .doc-sources,
+.memoriu-dark .memoriu-doc .doc-signatures .sig-role {
+  color: #a1a1aa;
+}
+
+.memoriu-dark .memoriu-doc a {
+  color: #fbbf24;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---------- Light/print theme (PDF) ---------- */
+
+.memoriu-print {
+  background: #ffffff;
+  color: #1c1917;
+  font-family: Georgia, "Times New Roman", serif;
+  max-width: 47rem;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+
+.memoriu-print .memoriu-doc .doc-kicker {
+  color: #92400e;
+}
+
+.memoriu-print .memoriu-doc h1,
+.memoriu-print .memoriu-doc h2,
+.memoriu-print .memoriu-doc h3 {
+  color: #0c0a09;
+}
+
+.memoriu-print .memoriu-doc h2 {
+  border-bottom: 1.5px solid #d6d3d1;
+}
+
+.memoriu-print .memoriu-doc blockquote {
+  border-color: #92400e;
+  background: #fafaf9;
+  color: #44403c;
+}
+
+.memoriu-print .memoriu-doc th {
+  color: #0c0a09;
+  border-color: #a8a29e;
+  background: #f5f5f4;
+}
+
+.memoriu-print .memoriu-doc td {
+  border-color: #e7e5e4;
+}
+
+.memoriu-print .memoriu-doc .doc-subject,
+.memoriu-print .memoriu-doc .doc-sources,
+.memoriu-print .memoriu-doc .doc-signatures .sig-role {
+  color: #57534e;
+}
+
+.memoriu-print .memoriu-doc a {
+  color: #1c1917;
+  text-decoration: none;
+}
+
+@media print {
+  .memoriu-print {
+    padding: 0;
+  }
+
+  .memoriu-doc h2 {
+    break-after: avoid;
+  }
+
+  .memoriu-doc blockquote,
+  .memoriu-doc table {
+    break-inside: avoid;
+  }
+}

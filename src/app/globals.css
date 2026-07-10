@@ -121,6 +121,12 @@ select {
   transform: translateY(-1px);
 }
 
+.topnav a.topnav-highlight {
+  color: var(--gold);
+  border: 1px solid var(--line-strong);
+  background: var(--gold-soft);
+}
+
 .hero {
   position: relative;
   padding: 72px 0 40px;

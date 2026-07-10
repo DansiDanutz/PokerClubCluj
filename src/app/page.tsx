@@ -594,6 +594,9 @@ export default function HomePage() {
             <a href="#scenariul-a">Scenariul A</a>
             <a href="#scenariul-b">Planul</a>
             <a href="#scrisoare">Scrisoare</a>
+            <a href="/memoriu" className="topnav-highlight">
+              Memoriu Iulie 2026 — Semnează
+            </a>
           </nav>
         </div>
       </header>
