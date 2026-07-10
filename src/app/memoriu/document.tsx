@@ -27,10 +27,12 @@ export default function MemoriuDocument() {
         Domnului Primar și a Consiliului Local al Municipiului Cluj-Napoca
       </p>
       <p>
-        <strong>Depus de:</strong> Poker World SRL — Players Poker Club
-        Cluj-Napoca, prin Dan Semenescu și Toma Alin, împreună cu susținătorii
-        semnatari (lista de semnături este anexată prezentului memoriu și poate fi
-        consultată la adresa poker-club-cluj.vercel.app/memoriu)
+        <strong>Depus de:</strong> Player&apos;s Poker Club
+        Cluj-Napoca, Str. Louis Pasteur nr. 75, Cluj-Napoca (tel. +40 758 889
+        666, playerspoker.ro), prin Dan Semenescu și Toma Alin, împreună cu
+        susținătorii semnatari (lista de semnături este anexată prezentului
+        memoriu și poate fi consultată la adresa
+        poker-club-cluj.vercel.app/memoriu)
       </p>
       <p>
         <strong>Data:</strong> {MEMORIU_DATE}
@@ -224,28 +226,56 @@ export default function MemoriuDocument() {
         </li>
       </ul>
 
-      <h2>VI. Practica europeană: pokerul este reglementat separat de sloturi</h2>
+      <h2>VI. Practica europeană: soluția propusă este deja implementată, prin lege</h2>
+      <p>
+        Distincția pe care o solicităm nu este o inovație locală — este{" "}
+        <strong>norma legislativă în vigoare</strong> în mai multe state
+        europene, cu acte normative identificabile:
+      </p>
       <table>
         <thead>
           <tr>
             <th>Jurisdicție</th>
-            <th>Măsura privind aparatele</th>
-            <th>Situația pokerului live</th>
+            <th>Actul normativ</th>
+            <th>Ce prevede</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>
+              <strong>Cehia</strong> — modelul cel mai apropiat de situația
+              Clujului
+            </td>
+            <td>
+              Legea nr. 186/2016 privind jocurile de noroc, § 12 alin. (1)
+              coroborat cu § 3 alin. (2), § 42 și § 57
+            </td>
+            <td>
+              Municipalitatea poate, prin regulament local, să interzică{" "}
+              <strong>separat, pe fiecare tip de joc</strong>: „jocul tehnic"
+              (aparatele slot, § 42) poate fi interzis integral, în timp ce
+              „jocul viu" (§ 57 — jocuri la masă „între jucători", inclusiv
+              jocurile de cărți și turneele de poker) rămâne permis. Exact
+              arhitectura pe care o propunem pentru Cluj-Napoca.
+            </td>
+          </tr>
+          <tr>
+            <td>
               <strong>Paris, Franța</strong>
             </td>
             <td>
-              Cazinourile și aparatele slot sunt interzise în capitală (interdicție
-              istorică, menținută)
+              Legea nr. 2017-257 (art. 34) și Decretul nr. 2017-913 (art. 14);
+              prelungire prin Legea finanțelor 2025 (nr. 2025-127, art. 102);
+              permanentizare prin Legea finanțelor 2026 (nr. 2026-103), validată
+              de Consiliul Constituțional francez (decizia nr. 2026-901 DC)
             </td>
             <td>
-              „Clubs de jeux" licențiate din 2018 pentru jocuri de masă — pokerul
-              este permis expres, sloturile rămân interzise; regim prelungit prin
-              legea finanțelor 2025
+              În capitala Franței cazinourile sunt interzise istoric, dar statul
+              a licențiat „clubs de jeux" în care lista exhaustivă a jocurilor
+              permise include pokerul în mai multe variante —{" "}
+              <strong>aparatele slot lipsesc din listă</strong> (rămân
+              interzise). Regimul, testat din 2018, a fost făcut permanent în
+              februarie 2026.
             </td>
           </tr>
           <tr>
@@ -253,52 +283,85 @@ export default function MemoriuDocument() {
               <strong>Marea Britanie</strong>
             </td>
             <td>
-              Miza maximă la terminalele de pariuri (FOBT) redusă de Guvern de la
-              100 £ la 2 £ (2019), țintind exclusiv aparatele
+              SI 2018/1402 — Gaming Machine (Miscellaneous Amendments and
+              Revocation) Regulations 2018; Gambling Act 2005, secț. 269–280
             </td>
-            <td>Pokerul de club și de cazinou — neafectat</td>
+            <td>
+              Guvernul a redus miza maximă la terminalele FOBT de la 100 £ la 2
+              £ (în vigoare de la 1 aprilie 2019) — măsură care a vizat{" "}
+              <strong>exclusiv aparatele de categoria B2</strong>. Pokerul,
+              calificat de lege drept „equal chance gaming" (joc cu șanse egale,
+              fără avantajul casei), rămâne permis în cazinouri, cluburi și chiar
+              puburi, cu plafoane.
+            </td>
           </tr>
           <tr>
             <td>
               <strong>Viena, Austria</strong>
             </td>
             <td>
-              Interzicerea totală a aparatelor slot în afara cazinourilor
-              („kleines Glücksspiel", 2015) — ~2.500 de aparate stradale eliminate
+              Novela la Wiener Veranstaltungsgesetz, LGBl. Nr. 43/2014 (în
+              vigoare de la 1.01.2015); confirmată de Curtea Constituțională a
+              Austriei (VfGH, G 205/2014 ș.a., 12.03.2015)
             </td>
-            <td>Jocurile de masă din locații licențiate au continuat</td>
+            <td>
+              Capitala Austriei a interzis integral aparatele slot din afara
+              cazinourilor („kleines Glücksspiel") — aproximativ 2.500 de
+              aparate stradale eliminate — în timp ce jocurile de masă din
+              locațiile licențiate au continuat.
+            </td>
           </tr>
           <tr>
             <td>
-              <strong>Cehia</strong>
+              <strong>Germania</strong>
             </td>
             <td>
-              Legea jocurilor nr. 186/2016 permite municipalităților să interzică
-              separat „jocurile tehnice" (aparatele)
+              Tratatul interlandic privind jocurile de noroc (GlüStV 2021), §
+              25; confirmat de Curtea Federală Administrativă (BVerwG,
+              8 B 28.23, 17.11.2023)
             </td>
             <td>
-              „Jocurile live" (poker, jocuri de masă) pot fi menținute prin
-              hotărâre locală — distincția pe tip de joc este codificată la nivel
-              municipal
+              Sălile de aparate (Spielhallen) sunt supuse unor restricții severe
+              dedicate (distanțe minime, interdicția grupării), care{" "}
+              <strong>nu se aplică</strong> pokerului live, oferit legal ca joc
+              de masă în cazinourile licențiate ale landurilor.
             </td>
           </tr>
         </tbody>
       </table>
       <p>
-        Modelul european dominant nu este „totul sau nimic", ci{" "}
-        <strong>reglementarea țintită pe tipul de joc care produce răul</strong>.
-        Municipiul Cluj-Napoca are ocazia să adopte exact acest standard.
+        De altfel, chiar autoritatea română de reglementare tratează categoria
+        distinct: ONJN publică o listă separată de „Operatori licențiați —
+        cluburi de poker" în registrul public al organizatorilor de jocuri de
+        noroc. Modelul european dominant nu este „totul sau nimic", ci{" "}
+        <strong>reglementarea țintită pe tipul de joc care produce răul</strong>
+        . Municipiul Cluj-Napoca nu ar improviza — ar aplica un standard deja
+        implementat și validat de instanțe constituționale în Franța și Austria.
       </p>
 
       <h2>VII. Precedentul românesc: hotărârile locale diferențiază deja pe tip de joc</h2>
       <p>
         Competența consiliului local de a decide asupra jocurilor de noroc este
         instituită prin art. 18^1 din OUG nr. 77/2009 (introdus prin art. III
-        pct. 6 din OUG nr. 7/2026), care se referă generic la „activități de
-        jocuri de noroc" și lasă consiliului stabilirea zonelor, a taxei locale
-        și a criteriilor „prin regulament propriu, cu respectarea priorităților
-        de dezvoltare locală, a normelor de protecție a ordinii și a sănătății și
-        siguranței publice". Legea nu instituie așadar o alegere binară
+        pct. 6 din OUG nr. 7/2026, publicată în M. Of. nr. 146/25.02.2026):
+      </p>
+      <blockquote>
+        „(1) Consiliul local decide, prin hotărâre, dacă pe teritoriul unității
+        administrativ-teritoriale pe care o reprezintă se pot sau nu desfășura
+        activități de jocuri de noroc. [...] (3) [...] Autorizația de
+        funcționare [...] se acordă sau se respinge prin hotărâre a consiliului
+        local, <strong>pe baza criteriilor stabilite prin regulament propriu</strong>,
+        cu respectarea priorităților de dezvoltare locală, a normelor de
+        protecție a ordinii și a sănătății și siguranței publice. (4)
+        Autoritatea administrației publice locale stabilește, prin hotărâre a
+        consiliului local: a) <strong>zonele</strong> în care activitățile de
+        jocuri de noroc pot fi desfășurate; b) cuantumul <strong>taxei locale</strong>{" "}
+        [...] calculată în funcție de suprafața [...] spațiului în care se
+        desfășoară activitatea." — art. 18^1 din OUG nr. 77/2009
+      </blockquote>
+      <p>
+        Legea acordă deci consiliului local o competență de{" "}
+        <strong>reglementare pe criterii proprii</strong> — nu o alegere binară
         „totul sau nimic": chiar proiectul supus consultării operează o excepție
         (jocurile loto), iar regimul tranzitoriu este cel din art. XXXIX din OUG
         nr. 7/2026.
@@ -318,11 +381,27 @@ export default function MemoriuDocument() {
         chestiune de coerență a aceluiași criteriu, nu o derogare nouă.
       </p>
 
-      <h2>VIII. Ce pierde Cluj-Napoca prin închiderea clubului</h2>
+      <h2>VIII. Contextul civic: cetățenii vizează „păcănelele", nu mesele de joc dintre oameni</h2>
+      <p>
+        Înțelegem și respectăm mobilizarea civică ce a precedat proiectul —
+        inclusiv petiția cu peste 14.000 de semnături pentru eliminarea
+        „păcănelelor" din Cluj-Napoca. Subliniem însă că obiectul acelei
+        revendicări îl reprezintă aparatele slot-machine și agențiile
+        omniprezente la stradă. Player&apos;s Poker Club nu deține niciun aparat
+        slot-machine, nu are vitrină stradală de tip „păcănele", funcționează
+        într-o sală specializată cu acces controlat și verificarea actului de
+        identitate la intrare. A răspunde unei petiții împotriva aparatelor prin
+        închiderea singurei săli de joc între participanți din oraș nu rezolvă
+        problema semnalată de cetățeni — dar produce toate pagubele colaterale
+        descrise mai jos.
+      </p>
+      <h2>IX. Ce pierde Cluj-Napoca prin închiderea clubului</h2>
       <ul>
         <li>
           <strong>Locuri de muncă directe</strong> și activitate economică
-          conexă (HoReCa, turism), într-o locație unică în Transilvania;
+          conexă (HoReCa, turism), într-o locație unică în Transilvania —
+          clubul este listat în bazele de date internaționale ale circuitului de
+          poker live (The Hendon Mob, PokerAtlas) și organizează turnee zilnic;
         </li>
         <li>
           <strong>Turism de eveniment</strong>: turneele de poker live atrag
@@ -346,7 +425,7 @@ export default function MemoriuDocument() {
         </li>
       </ul>
 
-      <h2>IX. Solicitări</h2>
+      <h2>X. Solicitări</h2>
       <ol>
         <li>
           <strong>Amendarea art. 1</strong> din proiectul de hotărâre în sensul
@@ -371,7 +450,7 @@ export default function MemoriuDocument() {
         </li>
       </ol>
 
-      <h2>X. Surse și referințe</h2>
+      <h2>XI. Surse și referințe</h2>
       <ol className="doc-sources">
         <li>
           OUG nr. 77/2009 privind organizarea și exploatarea jocurilor de noroc,
@@ -418,15 +497,166 @@ export default function MemoriuDocument() {
           the ninth affiliate member", 16.11.2024 — imsa.sport
         </li>
         <li>
-          Regimul „clubs de jeux" Paris — legea franceză din 2017/2018, prelungit
-          prin Loi de finances 2025; GOV.UK, „Government to cut Fixed Odds
-          Betting Terminals maximum stake from £100 to £2" (2018); Legea cehă nr.
-          186/2016 privind jocurile de noroc
+          Franța: Loi n° 2017-257 (art. 34), Décret n° 2017-913 (art. 14), Loi
+          n° 2025-127 (art. 102), Loi n° 2026-103 și decizia Conseil
+          constitutionnel n° 2026-901 DC — legifrance.gouv.fr,
+          conseil-constitutionnel.fr
+        </li>
+        <li>
+          Marea Britanie: The Gaming Machine (Miscellaneous Amendments and
+          Revocation) Regulations 2018 (SI 2018/1402); Gambling Act 2005, secț.
+          269–280 — legislation.gov.uk
+        </li>
+        <li>
+          Cehia: Zákon č. 186/2016 Sb., o hazardních hrách, § 3, § 12, § 42, §
+          57 — zakonyprolidi.cz
+        </li>
+        <li>
+          Austria: Wiener Veranstaltungsgesetz, novela LGBl. Nr. 43/2014; VfGH
+          12.03.2015, G 205/2014 — ris.bka.gv.at, vfgh.gv.at
+        </li>
+        <li>
+          Germania: Glücksspielstaatsvertrag 2021, § 20 și § 25; BVerwG
+          17.11.2023, 8 B 28.23
+        </li>
+        <li>
+          ONJN — Lista organizatorilor licențiați, categoria „cluburi de poker"
+          — onjn.gov.ro
         </li>
         <li>
           HCL Slatina din 13.03.2026 (digi24.ro); HCL Iași 2026 (ziare.com)
         </li>
       </ol>
+
+      <h2>Anexa 1 — Textul comparat al amendamentului propus (art. 1)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Forma din proiect</th>
+            <th>Forma propusă</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              „Se aprobă interzicerea desfășurării activității de jocuri de
+              noroc în locații fizice pe raza Municipiului Cluj-Napoca,{" "}
+              <em>
+                cu excepția jocurilor loto reglementate prin art. 18 alin. (1)
+                din Ordonanța de Urgență a Guvernului nr. 77/2009
+              </em>{" "}
+              privind organizarea și exploatarea jocurilor de noroc, cu
+              modificările și completările ulterioare."
+            </td>
+            <td>
+              „Se aprobă interzicerea desfășurării activității de jocuri de
+              noroc în locații fizice pe raza Municipiului Cluj-Napoca,{" "}
+              <em>
+                cu excepția jocurilor care se desfășoară exclusiv între
+                participanți, respectiv a jocurilor loto reglementate prin art.
+                18 alin. (1) și a jocurilor de noroc caracteristice cluburilor
+                de poker prevăzute la art. 10 alin. (1) lit. d) din Ordonanța de
+                Urgență a Guvernului nr. 77/2009
+              </em>{" "}
+              privind organizarea și exploatarea jocurilor de noroc, cu
+              modificările și completările ulterioare."
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Anexa 2 — Fișă comparativă pe tipuri de joc (criterii obiective)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Criteriu</th>
+            <th>Club de poker</th>
+            <th>Slot-machine</th>
+            <th>Cazinou</th>
+            <th>Pariuri</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong>Definiția legală</strong> (art. 10 alin. (1) OUG 77/2009)
+            </td>
+            <td>
+              lit. d) — „exclusiv între participanți, în săli specializate"
+            </td>
+            <td>
+              lit. e) — „câștigul este nelimitat și depinde de hazard"
+            </td>
+            <td>lit. c) — mijloace specifice de joc ale organizatorului</td>
+            <td>lit. b) — cotă fixă stabilită de organizator</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Adversarul jucătorului</strong>
+            </td>
+            <td>Ceilalți participanți</td>
+            <td>Aparatul operatorului</td>
+            <td>Casa (organizatorul)</td>
+            <td>Casa (organizatorul)</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Venitul operatorului</strong>
+            </td>
+            <td>
+              Comision / taxă de participare (art. 1^1 alin. (2) OUG 77/2009)
+            </td>
+            <td>Pierderile jucătorilor</td>
+            <td>Pierderile jucătorilor</td>
+            <td>Pierderile jucătorilor</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Rolul abilității</strong>
+            </td>
+            <td>
+              Determinant pe termen lung (Levitt &amp; Miles 2011; BFH 2015,
+              2023)
+            </td>
+            <td>„nicio influență/relevanță" (legea, lit. e))</td>
+            <td>Marginal (avantaj matematic al casei)</td>
+            <td>Limitat (cote stabilite de casă)</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Ritmul jocului</strong>
+            </td>
+            <td>~25–30 mâini/oră, joc social la masă</td>
+            <td>Sute de rotiri/oră, joc solitar continuu</td>
+            <td>Rapid, continuu</td>
+            <td>Pe eveniment</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Riscul documentat de adicție</strong>
+            </td>
+            <td>
+              Fără concentrare comparabilă de cazuri în literatura de
+              specialitate
+            </td>
+            <td>
+              Cel mai ridicat — 75–80% din cazurile aflate în consiliere
+              (Productivity Commission 2010)
+            </td>
+            <td>De câteva ori peste medie (UKGC 2024)</td>
+            <td>Peste medie (UKGC 2024)</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Expunere stradală în Cluj-Napoca</strong>
+            </td>
+            <td>0 vitrine — 1 sală specializată, acces controlat</td>
+            <td>53 de săli, majoritatea la stradă</td>
+            <td>Săli comerciale vizibile</td>
+            <td>43 de agenții la stradă</td>
+          </tr>
+        </tbody>
+      </table>
 
       <div className="doc-signatures">
         <div>
