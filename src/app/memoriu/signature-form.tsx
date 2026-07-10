@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 
-type RecentSigner = { name: string; city: string; date: string };
+type RecentSigner = { name: string; city: string; date: string; comment?: string };
 type Stats = { count: number; recent: RecentSigner[] };
 
 export default function SignatureForm() {
   const [stats, setStats] = useState<Stats>({ count: 0, recent: [] });
+  const [expanded, setExpanded] = useState<Record<number, boolean>>({});
+  const [allOpen, setAllOpen] = useState(false);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
@@ -135,22 +137,69 @@ export default function SignatureForm() {
             Prin semnare va exprimati acordul ca numele si adresa de email sa
             fie incluse in lista de sustinatori anexata memoriului depus la
             Primaria Municipiului Cluj-Napoca. Emailul nu este afisat public si
-            nu este folosit in alte scopuri.
+            nu este folosit in alte scopuri. Mesajul pentru Consiliul Local
+            (daca il completati) este afisat public pe aceasta pagina, alaturi
+            de prenume si initiala numelui.
           </p>
         </form>
       )}
 
       {stats.recent.length > 0 && (
         <div className="sig-recent">
-          <div className="sig-recent__title">Au semnat recent</div>
-          <div className="sig-recent__list">
-            {stats.recent.map((s, i) => (
-              <span key={i} className="sig-chip">
-                <span className="sig-chip__icon">✍</span>
-                {s.name}
-                {s.city ? <span className="sig-chip__city"> · {s.city}</span> : null}
-              </span>
-            ))}
+          <div className="sig-recent__head">
+            <div className="sig-recent__title">Au semnat recent</div>
+            {stats.recent.some((s) => s.comment) && (
+              <button
+                type="button"
+                className="sig-toggle-all"
+                onClick={() => {
+                  const next = !allOpen;
+                  setAllOpen(next);
+                  setExpanded(
+                    next
+                      ? Object.fromEntries(stats.recent.map((_, i) => [i, true]))
+                      : {}
+                  );
+                }}
+              >
+                {allOpen ? "▾ Ascunde mesajele" : "▸ Arată toate mesajele"}
+              </button>
+            )}
+          </div>
+          <div className="sig-recent__rows">
+            {stats.recent.map((s, i) => {
+              const hasComment = !!s.comment;
+              const isOpen = !!expanded[i];
+              return (
+                <div key={i} className="sig-row">
+                  <button
+                    type="button"
+                    className="sig-row__head"
+                    onClick={() =>
+                      hasComment &&
+                      setExpanded((e) => ({ ...e, [i]: !e[i] }))
+                    }
+                    disabled={!hasComment}
+                    aria-expanded={isOpen}
+                  >
+                    <span className="sig-chip__icon">✍</span>
+                    <span className="sig-row__name">{s.name}</span>
+                    {s.city ? (
+                      <span className="sig-chip__city">· {s.city}</span>
+                    ) : null}
+                    <span className="sig-row__date">{s.date}</span>
+                    {hasComment && (
+                      <span className="sig-row__caret">
+                        {isOpen ? "▾" : "▸"}
+                      </span>
+                    )}
+                  </button>
+                  {hasComment && isOpen && (
+                    <div className="sig-row__comment">„{s.comment}"</div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

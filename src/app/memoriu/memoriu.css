@@ -213,19 +213,93 @@
   border-top: 1px solid var(--line);
 }
 
+.sig-recent__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
 .sig-recent__title {
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-faint);
-  margin-bottom: 12px;
 }
 
-.sig-recent__list {
+.sig-toggle-all {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-soft);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.sig-toggle-all:hover {
+  border-color: var(--line-strong);
+  color: var(--gold);
+}
+
+.sig-recent__rows {
+  display: grid;
+  gap: 6px;
+}
+
+.sig-row {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+
+.sig-row__head {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
+  width: 100%;
+  border: 0;
+  background: none;
+  color: var(--text-soft);
+  padding: 9px 14px;
+  font-size: 0.82rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sig-row__head:disabled {
+  cursor: default;
+}
+
+.sig-row__name {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.sig-row__date {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.sig-row__caret {
+  color: var(--gold);
+  font-size: 0.8rem;
+}
+
+.sig-row__comment {
+  padding: 2px 14px 12px 36px;
+  font-size: 0.85rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--text-soft);
+  overflow-wrap: anywhere;
 }
 
 .sig-chip {
