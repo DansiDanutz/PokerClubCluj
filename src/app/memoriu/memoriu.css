@@ -322,6 +322,242 @@
   color: var(--text-faint);
 }
 
+/* ---------- Sinteza decizionala (pagina 1) ---------- */
+
+.sinteza__head {
+  text-align: center;
+  margin-bottom: 1.1rem;
+}
+
+.sinteza__kicker {
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.sinteza__title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.3;
+  margin: 0 0 0.4rem;
+}
+
+.sinteza__title em {
+  font-style: italic;
+}
+
+.sinteza__sub {
+  font-size: 0.85rem;
+  font-style: italic;
+  margin: 0;
+}
+
+.sinteza__facts {
+  display: grid;
+  gap: 0.55rem;
+  margin-bottom: 1rem;
+}
+
+.sinteza__fact {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  border-radius: 12px;
+  padding: 0.65rem 0.9rem;
+}
+
+.sinteza__fact-num {
+  flex-shrink: 0;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.sinteza__fact p {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.sinteza__boxes {
+  display: grid;
+  gap: 0.8rem;
+  margin-bottom: 0.9rem;
+}
+
+.sinteza__box {
+  border-radius: 14px;
+  padding: 0.9rem 1.1rem;
+  border: 1.5px solid;
+}
+
+.sinteza__box-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.55rem;
+}
+
+.sinteza__box ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.sinteza__box li {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin-bottom: 0.4rem;
+}
+
+.sinteza__quotes li {
+  font-style: italic;
+}
+
+.sinteza__objection {
+  margin: 0.55rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.sinteza__foot {
+  text-align: center;
+  font-size: 0.74rem;
+  font-style: italic;
+}
+
+/* Sinteza — dark (web) */
+
+.memoriu-dark .sinteza__kicker {
+  color: #f59e0b;
+}
+
+.memoriu-dark .sinteza__title {
+  color: #ffffff;
+}
+
+.memoriu-dark .sinteza__sub,
+.memoriu-dark .sinteza__foot {
+  color: #a1a1aa;
+}
+
+.memoriu-dark .sinteza__fact {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.memoriu-dark .sinteza__fact p {
+  color: #d4d4d8;
+}
+
+.memoriu-dark .sinteza__fact strong,
+.memoriu-dark .sinteza__box strong {
+  color: #ffffff;
+}
+
+.memoriu-dark .sinteza__fact-num {
+  background: linear-gradient(135deg, #ffd07a, #f59e0b);
+  color: #1b1306;
+}
+
+.memoriu-dark .sinteza__box--solution {
+  border-color: rgba(61, 214, 160, 0.35);
+  background: rgba(61, 214, 160, 0.06);
+}
+
+.memoriu-dark .sinteza__box--solution .sinteza__box-title {
+  color: #3dd6a0;
+}
+
+.memoriu-dark .sinteza__box--mayor {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.06);
+}
+
+.memoriu-dark .sinteza__box--mayor .sinteza__box-title {
+  color: #f59e0b;
+}
+
+.memoriu-dark .sinteza__box li,
+.memoriu-dark .sinteza__objection {
+  color: #d4d4d8;
+}
+
+/* Sinteza — print (PDF), compact ca sa incapa pe o pagina A4 */
+
+.memoriu-print .sinteza {
+  break-after: page;
+  page-break-after: always;
+}
+
+.memoriu-print .sinteza__kicker {
+  color: #92400e;
+}
+
+.memoriu-print .sinteza__title {
+  color: #0c0a09;
+  font-size: 1.3rem;
+}
+
+.memoriu-print .sinteza__sub,
+.memoriu-print .sinteza__foot {
+  color: #57534e;
+}
+
+.memoriu-print .sinteza__fact {
+  background: #fafaf9;
+  border: 1px solid #e7e5e4;
+  padding: 0.5rem 0.8rem;
+}
+
+.memoriu-print .sinteza__fact p {
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.memoriu-print .sinteza__fact-num {
+  background: #0c0a09;
+  color: #ffffff;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 0.85rem;
+}
+
+.memoriu-print .sinteza__box {
+  padding: 0.7rem 0.95rem;
+}
+
+.memoriu-print .sinteza__box li,
+.memoriu-print .sinteza__objection {
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.memoriu-print .sinteza__box--solution {
+  border-color: #14795b;
+  background: #f0faf6;
+}
+
+.memoriu-print .sinteza__box--solution .sinteza__box-title {
+  color: #14795b;
+}
+
+.memoriu-print .sinteza__box--mayor {
+  border-color: #92400e;
+  background: #fdf7ec;
+}
+
+.memoriu-print .sinteza__box--mayor .sinteza__box-title {
+  color: #92400e;
+}
+
 /* Shared document styles: .memoriu-doc is semantic; the wrapper decides the theme. */
 
 .memoriu-doc {
