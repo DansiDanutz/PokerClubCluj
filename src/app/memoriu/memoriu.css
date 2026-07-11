@@ -433,6 +433,99 @@
   font-style: italic;
 }
 
+.sinteza--p2 {
+  margin-top: 1.5rem;
+}
+
+.sinteza__qa p {
+  font-size: 0.8rem;
+  line-height: 1.55;
+  margin: 0 0 0.55rem;
+}
+
+.sinteza__wins {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.sinteza__win {
+  border-radius: 12px;
+  padding: 0.65rem 0.8rem;
+  text-align: center;
+  border: 1px solid;
+}
+
+.sinteza__win-k {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.25rem;
+}
+
+.sinteza__win-v {
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 639px) {
+  .sinteza__wins {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* wins + qa — dark */
+
+.memoriu-dark .sinteza__qa p {
+  color: #d4d4d8;
+}
+
+.memoriu-dark .sinteza__qa strong {
+  color: #fbbf24;
+}
+
+.memoriu-dark .sinteza__win {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.memoriu-dark .sinteza__win-k {
+  color: #f59e0b;
+}
+
+.memoriu-dark .sinteza__win-v {
+  color: #d4d4d8;
+}
+
+/* wins + qa — print */
+
+.memoriu-print .sinteza--p2 {
+  margin-top: 0;
+}
+
+.memoriu-print .sinteza__qa p {
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.memoriu-print .sinteza__qa strong {
+  color: #92400e;
+}
+
+.memoriu-print .sinteza__win {
+  background: #fafaf9;
+  border-color: #d6d3d1;
+}
+
+.memoriu-print .sinteza__win-k {
+  color: #92400e;
+}
+
+.memoriu-print .sinteza__win-v {
+  color: #44403c;
+}
+
 /* Sinteza — dark (web) */
 
 .memoriu-dark .sinteza__kicker {

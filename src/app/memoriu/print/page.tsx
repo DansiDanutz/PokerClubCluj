@@ -1,5 +1,5 @@
 import MemoriuDocument from "../document";
-import MemoriuSummary from "../summary";
+import MemoriuSummary, { MemoriuShield } from "../summary";
 import "../memoriu.css";
 
 export const metadata = {
@@ -11,6 +11,7 @@ export default function MemoriuPrintPage() {
   return (
     <div className="memoriu-print">
       <MemoriuSummary />
+      <MemoriuShield />
       <MemoriuDocument />
     </div>
   );
