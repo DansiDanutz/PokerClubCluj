@@ -133,3 +133,117 @@ export default function MemoriuSummary() {
     </section>
   );
 }
+
+export function MemoriuShield() {
+  return (
+    <section className="sinteza sinteza--p2">
+      <header className="sinteza__head">
+        <div className="sinteza__kicker">
+          Scutul juridic și răspunsurile la obiecții
+        </div>
+        <h1 className="sinteza__title">
+          De ce această excepție <em>întărește</em> hotărârea — nu o slăbește
+        </h1>
+      </header>
+
+      <div className="sinteza__boxes">
+        <div className="sinteza__box sinteza__box--solution">
+          <div className="sinteza__box-title">
+            Trei motive juridice pentru care decidentul are de câștigat
+          </div>
+          <ul>
+            <li>
+              <strong>Interdicția rămâne pentru 118 din 119 locații (99%).</strong>{" "}
+              Cu excepția inclusă, hotărârea rămâne cea mai dură măsură
+              anti-păcănele din istoria orașului: toate sălile de sloturi, toate
+              agențiile de pariuri și cazinourile dispar. Excepția privește o
+              singură sală, fără niciun aparat.
+            </li>
+            <li>
+              <strong>O excepție pe criteriu obiectiv face hotărârea mai greu de
+              anulat în instanță.</strong> Operatorii de sloturi vor ataca
+              hotărârea în contencios administrativ oricum. O interdicție
+              totală, cu excepție doar pentru monopolul de stat (Loteria), e
+              vulnerabilă la argumentul discriminării și al lipsei de
+              proporționalitate (art. 7 și 9 din Codul administrativ). O
+              hotărâre care tratează diferit situații pe care legea însăși le
+              definește diferit (art. 10 din OUG 77/2009) demonstrează exact
+              calibrarea pe care instanțele o cer — măsură țintită, nu
+              arbitrară.
+            </li>
+            <li>
+              <strong>Modelul e deja validat de curți constituționale.</strong>{" "}
+              Parisul (aparate interzise, cluburi de poker licențiate) — validat
+              de Conseil constitutionnel în 2026; Viena (aparate eliminate,
+              jocuri de masă păstrate) — validată de Curtea Constituțională
+              austriacă în 2015. Iar în România, Slatina și Iași au operat deja
+              excepții pe tip de joc în hotărârile lor.
+            </li>
+          </ul>
+        </div>
+
+        <div className="sinteza__box sinteza__box--mayor">
+          <div className="sinteza__box-title">
+            Răspunsuri gata formulate — pentru ședință, presă și contestatari
+          </div>
+          <div className="sinteza__qa">
+            <p>
+              <strong>„Tot jocuri de noroc sunt."</strong> — Legea le desparte,
+              nu noi: la aparate abilitatea „nu are nicio influență" (art. 10
+              lit. e)); pokerul se joacă „exclusiv între participanți" (lit.
+              d)), iar instanțele supreme germane îl impozitează ca activitate
+              profesională, pentru că rezultatul depinde preponderent de
+              abilitate. Criteriul nu este simpatia — este mecanismul care
+              produce dependența.
+            </p>
+            <p>
+              <strong>„De ce pokerul da și pariurile/sloturile nu?"</strong> —
+              La sloturi și pariuri operatorul câștigă exact ce pierde clientul,
+              iar pierderea e nelimitată. La poker clubul ia un comision fix,
+              costul e plafonat prin buy-in, iar banii circulă între oameni.
+              Sunt modele economice opuse — de aceea și riscul de dependență e
+              concentrat la aparate: 75–80% din cazurile aflate în consiliere
+              (Comisia de Productivitate, Australia).
+            </p>
+            <p>
+              <strong>„E o favoare pentru o firmă."</strong> — Nu: excepția e
+              definită prin categoria legală (art. 10 alin. (1) lit. d) din OUG
+              77/2009) și e valabilă pentru orice operator care îndeplinește
+              condițiile — sală specializată, zero aparate, acces exclusiv
+              adulți, amplasare în hotel sau centru comercial. Criteriu, nu
+              nume.
+            </p>
+            <p>
+              <strong>„Să se mute în alt oraș."</strong> — Cererea nu dispare:
+              migrează în jocuri private neautorizate, fără verificarea
+              vârstei, fără plafoane, fără taxe — sau online, unde expunerea e
+              continuă. Orașul pierde controlul și veniturile; problema rămâne.
+              Reglementarea într-un spațiu controlat este soluția, nu exilul.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="sinteza__wins">
+        <div className="sinteza__win">
+          <div className="sinteza__win-k">Imagine</div>
+          <div className="sinteza__win-v">
+            Cea mai dură decizie anti-păcănele din România, intactă
+          </div>
+        </div>
+        <div className="sinteza__win">
+          <div className="sinteza__win-k">Control</div>
+          <div className="sinteza__win-v">
+            Zero vitrine stradale; joc doar în spații pentru adulți
+          </div>
+        </div>
+        <div className="sinteza__win">
+          <div className="sinteza__win-k">Venit</div>
+          <div className="sinteza__win-v">
+            Taxă locală anuală, direcționabilă către programe anti-adicție
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
