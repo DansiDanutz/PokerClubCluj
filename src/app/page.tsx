@@ -608,12 +608,16 @@ export default function HomePage() {
           <div className="hero__panel reveal">
             <span className="eyebrow">Propunere oficiala • Martie 2026</span>
             <div className="urgent-callout">
-              <div className="urgent-callout__label">OUG 7/2026</div>
-              <div className="urgent-callout__body">
-                Consiliile locale primesc dreptul de a decide.
+              <div className="urgent-callout__label">
+                Consultare publică — termen 15 iulie 2026
               </div>
-              <a href="#istoric" className="button button--mini">
-                Istoric Legislativ
+              <div className="urgent-callout__body">
+                Primăria propune interzicerea tuturor jocurilor de noroc.
+                Memoriul nostru cere exceptarea cluburilor de poker — jocuri
+                între participanți, ca Loto.
+              </div>
+              <a href="/memoriu" className="button button--mini">
+                Citește memoriul și semnează →
               </a>
             </div>
             <h1>
@@ -629,7 +633,10 @@ export default function HomePage() {
               predictibil pentru oras.
             </p>
             <div className="hero__actions">
-              <a href="#scenariul-b" className="button button--primary">
+              <a href="/memoriu" className="button button--primary">
+                ✍ Semnează memoriul — până pe 15 iulie
+              </a>
+              <a href="#scenariul-b" className="button button--ghost">
                 Vedeti planul de compromis
               </a>
               <a href="#scenariul-a" className="button button--ghost">
