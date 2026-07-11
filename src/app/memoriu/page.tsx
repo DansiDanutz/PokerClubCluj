@@ -1,4 +1,5 @@
 import MemoriuDocument from "./document";
+import MemoriuSummary from "./summary";
 import SignatureForm from "./signature-form";
 import "./memoriu.css";
 
@@ -49,6 +50,10 @@ export default function MemoriuPage() {
             noroc în Cluj-Napoca este deschisă doar până pe 15 iulie. Semnează
             mai jos pentru ca vocea ta să fie anexată memoriului.
           </p>
+        </div>
+
+        <div className="memoriu-panel memoriu-dark" style={{ marginBottom: "36px" }}>
+          <MemoriuSummary />
         </div>
 
         <div id="semneaza" className="memoriu-sign">
