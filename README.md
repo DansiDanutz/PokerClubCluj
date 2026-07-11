@@ -1,20 +1,49 @@
-# Pokercluj
+# Poker Club Cluj
 
-This project is a local reconstruction of the currently deployed `pokercluj.vercel.app` site.
+Site-ul campaniei Players Poker Club Cluj-Napoca: propunerea către Consiliul
+Local și memoriul depus în consultarea publică (1–15 iulie 2026) privind
+proiectul de interzicere a jocurilor de noroc, cu formular de semnare online.
 
-## Structure
+Deployed la `poker-club-cluj.vercel.app` (Next.js App Router).
 
-- `src/app/layout.tsx`: app shell, metadata, and root classes
-- `src/app/page.tsx`: page entrypoint
-- `src/app/page-sections.ts`: source-owned section content used by the page
-- `snapshot/production.html`: captured production page markup
-- `snapshot/production.css`: captured production stylesheet
-- `archive/`: old comparison, verification, and extraction artifacts kept for reference
+## Structura
 
-## Notes
+- `src/app/page.tsx` — pagina principală (propunerea pentru Consiliul Local)
+- `src/app/memoriu/page.tsx` — pagina memoriului + formular de semnare
+- `src/app/memoriu/document.tsx` — textul integral al memoriului (sursă unică
+  pentru web și PDF)
+- `src/app/memoriu/summary.tsx` — sinteza decizională (pag. 1) și scutul
+  juridic (pag. 2)
+- `src/app/memoriu/print/page.tsx` — versiunea pentru tipar/PDF (noindex)
+- `src/app/api/petition/route.ts` — API semnături (proxy către Supabase)
+- `public/memoriu-poker-cluj-iulie-2026.pdf` — versiunea PDF descărcabilă
 
-- The original authored source was not available in this workspace.
-- The rendered page no longer reads the snapshot files at runtime.
-- The current layout/content is now owned by `src/app/page-sections.ts`, while `snapshot/` remains as reference material.
-- The next refinement step is to replace the remaining HTML string sections with typed data and JSX components section by section.
-- Latest repository sync for deployment was updated on `2026-03-31`.
+## Semnături (Supabase)
+
+Semnăturile se stochează în proiectul Supabase `pewwxyyxcepvluowvaxh`, tabela
+`petition_signatures`, cu RLS activ:
+
+- rolul `anon` poate doar INSERT (nu poate citi rândurile — emailurile nu sunt
+  expuse public);
+- statisticile publice vin din funcția `petition_stats()` (SECURITY DEFINER),
+  care returnează numele prescurtat („Prenume I."), localitatea, data și doar
+  mesajele aprobate editorial (`comment_approved = true`);
+- unicitatea emailului este garantată de un index unic pe `lower(email)`
+  (formularul răspunde cu 409 la dublură).
+
+Cheia anon din `src/app/api/petition/route.ts` este publică prin design;
+`SUPABASE_URL` / `SUPABASE_ANON_KEY` pot fi suprascrise prin env vars.
+
+## Comenzi
+
+```bash
+npm install
+npm run dev    # dezvoltare locală
+npm run build  # build de producție
+```
+
+## Regenerarea PDF-ului
+
+PDF-ul din `public/` trebuie regenerat după orice modificare a textului
+memoriului (`document.tsx`, `summary.tsx`): se tipărește pagina `/memoriu/print`
+în format A4 și se salvează peste `public/memoriu-poker-cluj-iulie-2026.pdf`.
