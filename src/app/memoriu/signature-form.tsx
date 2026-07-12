@@ -148,7 +148,7 @@ export default function SignatureForm() {
             Primaria Municipiului Cluj-Napoca. Emailul nu este afisat public si
             nu este folosit in alte scopuri. Mesajul pentru Consiliul Local
             (daca il completati) apare public pe aceasta pagina, alaturi de
-            prenume si initiala numelui, dupa o scurta verificare editoriala.
+            prenume si initiala numelui. Mesajele nepotrivite pot fi eliminate.
             Adresa IP este inregistrata exclusiv pentru prevenirea abuzurilor.
           </p>
         </form>
