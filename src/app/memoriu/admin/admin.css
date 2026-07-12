@@ -1,0 +1,173 @@
+.admin-shell {
+  min-height: 100vh;
+  background: #0a0f1a;
+  color: #e4e4e7;
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-shell--wide {
+  align-items: stretch;
+}
+
+.admin-login {
+  margin-top: 12vh;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 28px 24px;
+}
+
+.admin-login h1 {
+  font-size: 1.05rem;
+  margin: 0 0 6px;
+  color: #fff;
+}
+
+.admin-input {
+  width: 100%;
+  border-radius: 10px;
+  background: #0a0f1a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 11px 14px;
+  font-size: 0.9rem;
+  color: #fff;
+  outline: none;
+}
+
+.admin-input:focus {
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
+.admin-btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 11px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffd07a, #f59e0b);
+  color: #1b1306;
+}
+
+.admin-btn:disabled {
+  opacity: 0.6;
+}
+
+.admin-error {
+  background: rgba(255, 106, 111, 0.12);
+  border: 1px solid rgba(255, 106, 111, 0.3);
+  color: #ff8a8f;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+}
+
+.admin-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.admin-head h1 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #fff;
+}
+
+.admin-sub {
+  color: #71717a;
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
+.admin-search {
+  max-width: 340px;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 10px 12px;
+  color: #f59e0b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  position: sticky;
+  top: 0;
+  background: #111827;
+}
+
+.admin-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: top;
+}
+
+.admin-row--repeat {
+  background: rgba(255, 106, 111, 0.08);
+}
+
+.admin-nowrap {
+  white-space: nowrap;
+}
+
+.admin-mono {
+  font-family: ui-monospace, "Cascadia Code", monospace;
+}
+
+.admin-flag {
+  margin-left: 6px;
+  background: #ff6a6f;
+  color: #1b0606;
+  font-weight: 800;
+  border-radius: 6px;
+  padding: 1px 5px;
+  font-size: 0.7rem;
+}
+
+.admin-ua {
+  max-width: 260px;
+  white-space: normal;
+  color: #a1a1aa;
+  font-size: 0.72rem;
+}
+
+.admin-lang {
+  color: #71717a;
+  font-size: 0.68rem;
+  margin-top: 2px;
+}
+
+.admin-comment {
+  max-width: 340px;
+  white-space: normal;
+}
+
+.admin-note {
+  color: #71717a;
+  font-size: 0.78rem;
+  margin-top: 16px;
+  line-height: 1.5;
+}
