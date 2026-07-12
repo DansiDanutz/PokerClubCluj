@@ -7,8 +7,9 @@ type Stats = { count: number; recent: RecentSigner[] };
 
 export default function SignatureForm() {
   const [stats, setStats] = useState<Stats>({ count: 0, recent: [] });
-  const [expanded, setExpanded] = useState<Record<number, boolean>>({});
-  const [allOpen, setAllOpen] = useState(false);
+  // Mesajele aprobate sunt vizibile implicit; aici retinem doar randurile restranse.
+  const [collapsed, setCollapsed] = useState<Record<number, boolean>>({});
+  const [allCollapsed, setAllCollapsed] = useState(false);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
@@ -154,23 +155,24 @@ export default function SignatureForm() {
                 type="button"
                 className="sig-toggle-all"
                 onClick={() => {
-                  const next = !allOpen;
-                  setAllOpen(next);
-                  setExpanded(
+                  const next = !allCollapsed;
+                  setAllCollapsed(next);
+                  setCollapsed(
                     next
                       ? Object.fromEntries(stats.recent.map((_, i) => [i, true]))
                       : {}
                   );
                 }}
               >
-                {allOpen ? "▾ Ascunde mesajele" : "▸ Arată toate mesajele"}
+                {allCollapsed ? "▸ Arată mesajele" : "▾ Ascunde mesajele"}
               </button>
             )}
           </div>
           <div className="sig-recent__rows">
             {stats.recent.map((s, i) => {
               const hasComment = !!s.comment;
-              const isOpen = !!expanded[i];
+              // Vizibil implicit; se ascunde doar daca a fost restrans.
+              const isOpen = hasComment && !collapsed[i];
               return (
                 <div key={i} className="sig-row">
                   <button
@@ -178,7 +180,7 @@ export default function SignatureForm() {
                     className="sig-row__head"
                     onClick={() =>
                       hasComment &&
-                      setExpanded((e) => ({ ...e, [i]: !e[i] }))
+                      setCollapsed((c) => ({ ...c, [i]: !c[i] }))
                     }
                     disabled={!hasComment}
                     aria-expanded={isOpen}
@@ -195,7 +197,7 @@ export default function SignatureForm() {
                       </span>
                     )}
                   </button>
-                  {hasComment && isOpen && (
+                  {isOpen && (
                     <div className="sig-row__comment">„{s.comment}"</div>
                   )}
                 </div>
