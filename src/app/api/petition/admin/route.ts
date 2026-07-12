@@ -9,16 +9,20 @@ const SUPABASE_ANON_KEY =
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
-  let body: { password?: string };
+  let body: { email?: string; password?: string };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Cerere invalida." }, { status: 400 });
   }
 
+  const email = (body.email ?? "").trim();
   const password = (body.password ?? "").trim();
-  if (!password) {
-    return NextResponse.json({ error: "Parola lipseste." }, { status: 400 });
+  if (!email || !password) {
+    return NextResponse.json(
+      { error: "Email si parola sunt obligatorii." },
+      { status: 400 }
+    );
   }
 
   const res = await fetch(
@@ -30,7 +34,7 @@ export async function POST(req: NextRequest) {
         Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ p_secret: password }),
+      body: JSON.stringify({ p_email: email, p_secret: password }),
       cache: "no-store",
     }
   );
