@@ -17,6 +17,7 @@ type Row = {
 };
 
 export default function AdminPage() {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rows, setRows] = useState<Row[] | null>(null);
   const [error, setError] = useState("");
@@ -32,7 +33,7 @@ export default function AdminPage() {
       const res = await fetch("/api/petition/admin/delete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password, id }),
+        body: JSON.stringify({ email, password, id }),
       });
       if (!res.ok) {
         alert("Ștergerea a eșuat.");
@@ -54,7 +55,7 @@ export default function AdminPage() {
       const res = await fetch("/api/petition/admin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -95,12 +96,21 @@ export default function AdminPage() {
         <form className="admin-login" onSubmit={login}>
           <h1>Panou semnături — acces privat</h1>
           <input
+            type="email"
+            placeholder="Email administrator"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="admin-input"
+            autoComplete="username"
+            autoFocus
+          />
+          <input
             type="password"
             placeholder="Parolă administrator"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="admin-input"
-            autoFocus
+            autoComplete="current-password"
           />
           {error && <div className="admin-error">{error}</div>}
           <button type="submit" className="admin-btn" disabled={loading}>

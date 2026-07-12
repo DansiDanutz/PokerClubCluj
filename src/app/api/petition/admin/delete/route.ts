@@ -9,16 +9,17 @@ const SUPABASE_ANON_KEY =
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
-  let body: { password?: string; id?: string };
+  let body: { email?: string; password?: string; id?: string };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Cerere invalida." }, { status: 400 });
   }
 
+  const email = (body.email ?? "").trim();
   const password = (body.password ?? "").trim();
   const id = (body.id ?? "").trim();
-  if (!password || !id) {
+  if (!email || !password || !id) {
     return NextResponse.json({ error: "Date lipsa." }, { status: 400 });
   }
 
@@ -31,7 +32,7 @@ export async function POST(req: NextRequest) {
         Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ p_secret: password, p_id: id }),
+      body: JSON.stringify({ p_email: email, p_secret: password, p_id: id }),
       cache: "no-store",
     }
   );
