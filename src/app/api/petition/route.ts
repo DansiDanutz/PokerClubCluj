@@ -81,6 +81,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Retinute pentru prevenirea si investigarea abuzurilor (nu sunt publice).
+  const ip =
+    (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || null;
+  const userAgent = req.headers.get("user-agent")?.slice(0, 300) ?? null;
+
   let res: Response;
   try {
     res = await fetch(`${SUPABASE_URL}/rest/v1/petition_signatures`, {
@@ -91,6 +96,8 @@ export async function POST(req: NextRequest) {
         email,
         city: city || null,
         comment: comment || null,
+        ip,
+        user_agent: userAgent,
       }),
     });
   } catch {

@@ -140,6 +140,7 @@ export default function SignatureForm() {
             nu este folosit in alte scopuri. Mesajul pentru Consiliul Local
             (daca il completati) apare public pe aceasta pagina, alaturi de
             prenume si initiala numelui, dupa o scurta verificare editoriala.
+            Adresa IP este inregistrata exclusiv pentru prevenirea abuzurilor.
           </p>
         </form>
       )}
