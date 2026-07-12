@@ -207,6 +207,73 @@
   color: var(--text-soft);
 }
 
+.sig-messages {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.sig-messages__title {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.sig-messages__list {
+  display: grid;
+  gap: 10px;
+}
+
+@media (min-width: 640px) {
+  .sig-messages__list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.sig-msg {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  border-radius: 10px;
+  background: rgba(245, 158, 11, 0.05);
+  padding: 12px 15px;
+}
+
+.sig-msg blockquote {
+  margin: 0 0 8px;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: #e4e4e7;
+  font-style: italic;
+  overflow-wrap: anywhere;
+}
+
+.sig-msg figcaption {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+.sig-msg__name {
+  font-weight: 700;
+  color: #fff;
+}
+
+.sig-messages__more {
+  margin-top: 14px;
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  background: var(--gold-soft);
+  color: var(--gold);
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
 .sig-recent {
   margin-top: 24px;
   padding-top: 18px;
