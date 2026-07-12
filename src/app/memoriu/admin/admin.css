@@ -165,6 +165,27 @@
   white-space: normal;
 }
 
+.admin-del {
+  border: 1px solid rgba(255, 106, 111, 0.4);
+  background: rgba(255, 106, 111, 0.1);
+  color: #ff8a8f;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.admin-del:hover {
+  background: rgba(255, 106, 111, 0.2);
+}
+
+.admin-del:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 .admin-note {
   color: #71717a;
   font-size: 0.78rem;

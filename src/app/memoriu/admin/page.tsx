@@ -22,6 +22,29 @@ export default function AdminPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState("");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  const deleteRow = async (id: string, name: string) => {
+    if (!confirm(`Ștergi semnătura „${name}"? Acțiunea nu poate fi anulată.`))
+      return;
+    setDeletingId(id);
+    try {
+      const res = await fetch("/api/petition/admin/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password, id }),
+      });
+      if (!res.ok) {
+        alert("Ștergerea a eșuat.");
+        return;
+      }
+      setRows((prev) => (prev ? prev.filter((r) => r.id !== id) : prev));
+    } catch {
+      alert("Eroare de rețea.");
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,6 +141,7 @@ export default function AdminPage() {
               <th>Dispozitiv / browser</th>
               <th>Mesaj</th>
               <th>Public</th>
+              <th>Acțiune</th>
             </tr>
           </thead>
           <tbody>
@@ -145,6 +169,16 @@ export default function AdminPage() {
                   </td>
                   <td className="admin-comment">{r.comment ?? "—"}</td>
                   <td>{r.comment_approved ? "✅" : "—"}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="admin-del"
+                      onClick={() => deleteRow(r.id, r.full_name)}
+                      disabled={deletingId === r.id}
+                    >
+                      {deletingId === r.id ? "..." : "Șterge"}
+                    </button>
+                  </td>
                 </tr>
               );
             })}
