@@ -85,6 +85,7 @@ export async function POST(req: NextRequest) {
   const ip =
     (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || null;
   const userAgent = req.headers.get("user-agent")?.slice(0, 300) ?? null;
+  const lang = req.headers.get("accept-language")?.slice(0, 120) ?? null;
 
   let res: Response;
   try {
@@ -98,6 +99,7 @@ export async function POST(req: NextRequest) {
         comment: comment || null,
         ip,
         user_agent: userAgent,
+        lang,
       }),
     });
   } catch {
