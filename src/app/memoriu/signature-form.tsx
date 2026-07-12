@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 
 type RecentSigner = { name: string; city: string; date: string; comment?: string };
-type Stats = { count: number; recent: RecentSigner[] };
+type Message = { name: string; city: string; date: string; comment: string };
+type Stats = { count: number; recent: RecentSigner[]; messages: Message[] };
 
 export default function SignatureForm() {
-  const [stats, setStats] = useState<Stats>({ count: 0, recent: [] });
+  const [stats, setStats] = useState<Stats>({ count: 0, recent: [], messages: [] });
+  const [showAllMessages, setShowAllMessages] = useState(false);
   // Mesajele aprobate sunt vizibile implicit; aici retinem doar randurile restranse.
   const [collapsed, setCollapsed] = useState<Record<number, boolean>>({});
   const [allCollapsed, setAllCollapsed] = useState(false);
@@ -22,7 +24,13 @@ export default function SignatureForm() {
   const loadStats = () =>
     fetch("/api/petition")
       .then((r) => r.json())
-      .then((s: Stats) => setStats({ count: s.count ?? 0, recent: s.recent ?? [] }))
+      .then((s: Stats) =>
+        setStats({
+          count: s.count ?? 0,
+          recent: s.recent ?? [],
+          messages: s.messages ?? [],
+        })
+      )
       .catch(() => undefined);
 
   useEffect(() => {
@@ -144,6 +152,40 @@ export default function SignatureForm() {
             Adresa IP este inregistrata exclusiv pentru prevenirea abuzurilor.
           </p>
         </form>
+      )}
+
+      {stats.messages.length > 0 && (
+        <div className="sig-messages">
+          <div className="sig-messages__title">
+            Mesaje de la susținători ({stats.messages.length})
+          </div>
+          <div className="sig-messages__list">
+            {(showAllMessages ? stats.messages : stats.messages.slice(0, 6)).map(
+              (m, i) => (
+                <figure key={i} className="sig-msg">
+                  <blockquote>„{m.comment}"</blockquote>
+                  <figcaption>
+                    <span className="sig-msg__name">{m.name}</span>
+                    {m.city ? (
+                      <span className="sig-msg__city"> · {m.city}</span>
+                    ) : null}
+                  </figcaption>
+                </figure>
+              )
+            )}
+          </div>
+          {stats.messages.length > 6 && (
+            <button
+              type="button"
+              className="sig-messages__more"
+              onClick={() => setShowAllMessages((v) => !v)}
+            >
+              {showAllMessages
+                ? "Arată mai puține"
+                : `Arată toate mesajele (${stats.messages.length})`}
+            </button>
+          )}
+        </div>
       )}
 
       {stats.recent.length > 0 && (
