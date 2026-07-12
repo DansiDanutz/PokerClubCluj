@@ -105,8 +105,8 @@ export default function SignatureForm() {
             className="sig-input"
           />
           <textarea
-            maxLength={500}
-            rows={2}
+            maxLength={2000}
+            rows={3}
             placeholder="Mesaj pentru Consiliul Local (optional)"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
