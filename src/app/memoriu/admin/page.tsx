@@ -197,6 +197,32 @@ export default function AdminPage() {
     }
   };
 
+  const toggleBlock = async (id: string, makeBlocked: boolean) => {
+    try {
+      const res = await fetch("/api/petition/admin/block", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, id, blocked: makeBlocked }),
+      });
+      if (res.status === 401) return sessionExpired();
+      if (!res.ok) {
+        alert("Operațiunea a eșuat.");
+        return;
+      }
+      setRows((prev) => {
+        if (!prev) return prev;
+        const target = prev.find((r) => r.id === id);
+        const ip = target?.ip ?? null;
+        // Toate randurile cu acelasi IP reflecta noua stare.
+        return prev.map((r) =>
+          ip && r.ip === ip ? { ...r, ip_blocked: makeBlocked } : r
+        );
+      });
+    } catch {
+      alert("Eroare de rețea.");
+    }
+  };
+
   const toggleFlag = async (id: string, makeFlagged: boolean) => {
     try {
       const res = await fetch("/api/petition/admin/flag", {
@@ -553,6 +579,23 @@ export default function AdminPage() {
                         {r.flagged ? "⚐ Scoate din analiză" : "🟠 Marchează"}
                       </button>
                     )}
+                    {r.ip_blocked ? (
+                      <button
+                        type="button"
+                        className="admin-allow"
+                        onClick={() => toggleBlock(r.id, false)}
+                      >
+                        ✅ Allow (deblochează IP)
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="admin-block"
+                        onClick={() => toggleBlock(r.id, true)}
+                      >
+                        ⛔ Block (blochează IP)
+                      </button>
+                    )}
                     {(r.flagged || r.ip_blocked || !r.comment_approved) && (
                       <button
                         type="button"
@@ -568,7 +611,7 @@ export default function AdminPage() {
                       onClick={() => deleteRow(r.id, r.full_name)}
                       disabled={deletingId === r.id}
                     >
-                      {deletingId === r.id ? "..." : "🗑 Șterge + blochează"}
+                      {deletingId === r.id ? "..." : "🗑 Șterge"}
                     </button>
                   </div>
                 </div>
@@ -584,10 +627,11 @@ export default function AdminPage() {
         Sunt deja ascunse de pe pagina publică — citește-le și decide.
         <b> ⛔ Roșu = Blocat</b>: IP interzis. Butoane pe fiecare rând:
         <b> 🙈 Ascunde/👁 Arată</b> mesajul, <b>🟠 Marchează</b> pentru analiză,
-        <b> ♻ Restore</b> (reafișează + scoate din analiză + deblochează IP-ul),
-        <b> 🗑 Șterge + blochează</b> (elimină definitiv și blochează IP-ul, iar
-        postările viitoare de pe el sunt ascunse automat, în tăcere). Rândurile
-        cu „IP ×N" = același IP semnat de mai multe ori. Datele sunt private.
+        <b> ⛔ Block</b> / <b>✅ Allow</b> blochează sau deblochează IP-ul (fără
+        ștergere), <b> ♻ Restore</b> (reafișează + scoate din analiză +
+        deblochează), <b> 🗑 Șterge</b> (elimină definitiv). Postările viitoare
+        de pe un IP blocat sunt ascunse automat, în tăcere. Rândurile cu „IP ×N"
+        = același IP semnat de mai multe ori. Datele sunt private.
       </p>
     </main>
   );
