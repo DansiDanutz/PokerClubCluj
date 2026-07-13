@@ -1,9 +1,11 @@
 .admin-shell {
   min-height: 100vh;
-  background: #0a0f1a;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08), transparent 40%),
+    #0a0f1a;
   color: #e4e4e7;
   font-family: "Manrope", "Segoe UI", sans-serif;
-  padding: 40px 20px;
+  padding: 32px 20px 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,21 +15,34 @@
   align-items: stretch;
 }
 
+/* Login */
+
 .admin-login {
-  margin-top: 12vh;
+  margin-top: 10vh;
   width: 100%;
-  max-width: 340px;
+  max-width: 360px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   background: #111827;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 28px 24px;
+  border-radius: 18px;
+  padding: 30px 26px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+
+.admin-login__brand {
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+}
+
+.admin-login__spade {
+  color: #f59e0b;
 }
 
 .admin-login h1 {
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   margin: 0 0 6px;
   color: #fff;
 }
@@ -50,8 +65,8 @@
 .admin-btn {
   border: 0;
   border-radius: 10px;
-  padding: 11px;
-  font-weight: 700;
+  padding: 12px;
+  font-weight: 800;
   font-size: 0.9rem;
   cursor: pointer;
   background: linear-gradient(135deg, #ffd07a, #f59e0b);
@@ -71,29 +86,113 @@
   font-size: 0.82rem;
 }
 
-.admin-head {
+/* Dashboard */
+
+.admin-topbar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
   align-items: center;
   justify-content: space-between;
+  gap: 14px;
   margin-bottom: 18px;
 }
 
-.admin-head h1 {
-  font-size: 1.2rem;
-  margin: 0;
+.admin-brand {
+  font-weight: 800;
+  font-size: 1.1rem;
   color: #fff;
 }
 
-.admin-sub {
+.admin-topbar__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-ghost {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+  color: #d4d4d8;
+  border-radius: 9px;
+  padding: 8px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-ghost:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #f59e0b;
+}
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.admin-stat {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.admin-stat__v {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #f59e0b;
+  line-height: 1.1;
+}
+
+.admin-stat__k {
+  font-size: 0.72rem;
   color: #71717a;
-  font-weight: 400;
-  font-size: 0.85rem;
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.admin-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .admin-search {
-  max-width: 340px;
+  flex: 1 1 260px;
+  max-width: 420px;
+}
+
+.admin-filters {
+  display: flex;
+  gap: 6px;
+}
+
+.admin-chip {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  color: #a1a1aa;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-chip--on {
+  border-color: rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+}
+
+.admin-count {
+  font-size: 0.75rem;
+  color: #71717a;
+  margin-bottom: 10px;
 }
 
 .admin-table-wrap {
@@ -111,18 +210,26 @@
 
 .admin-table th {
   text-align: left;
-  padding: 10px 12px;
+  padding: 11px 12px;
   color: #f59e0b;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   position: sticky;
   top: 0;
   background: #111827;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .admin-table td {
-  padding: 9px 12px;
+  padding: 10px 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   vertical-align: top;
+}
+
+.admin-table tbody tr:hover,
+.admin-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .admin-row--repeat {
@@ -131,6 +238,12 @@
 
 .admin-nowrap {
   white-space: nowrap;
+  color: #a1a1aa;
+}
+
+.admin-strong {
+  font-weight: 700;
+  color: #fff;
 }
 
 .admin-mono {
@@ -148,7 +261,7 @@
 }
 
 .admin-ua {
-  max-width: 260px;
+  max-width: 240px;
   white-space: normal;
   color: #a1a1aa;
   font-size: 0.72rem;
@@ -161,8 +274,15 @@
 }
 
 .admin-comment {
-  max-width: 340px;
+  max-width: 360px;
   white-space: normal;
+  color: #e4e4e7;
+}
+
+.admin-likes {
+  color: #ff8a8f;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .admin-del {
@@ -170,15 +290,15 @@
   background: rgba(255, 106, 111, 0.1);
   color: #ff8a8f;
   border-radius: 8px;
-  padding: 5px 12px;
+  padding: 6px 12px;
   font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
 }
 
-.admin-del:hover {
-  background: rgba(255, 106, 111, 0.2);
+.admin-del:hover:not(:disabled) {
+  background: rgba(255, 106, 111, 0.22);
 }
 
 .admin-del:disabled {
@@ -191,4 +311,10 @@
   font-size: 0.78rem;
   margin-top: 16px;
   line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .admin-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

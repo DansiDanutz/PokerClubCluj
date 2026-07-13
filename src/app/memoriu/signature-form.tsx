@@ -3,12 +3,23 @@
 import { useEffect, useState } from "react";
 
 type RecentSigner = { name: string; city: string; date: string; comment?: string };
-type Message = { name: string; city: string; date: string; comment: string };
+type Message = {
+  id: string;
+  name: string;
+  city: string;
+  date: string;
+  comment: string;
+  likes: number;
+};
 type Stats = { count: number; recent: RecentSigner[]; messages: Message[] };
+
+const LIKED_KEY = "pokercluj_liked_ids";
 
 export default function SignatureForm() {
   const [stats, setStats] = useState<Stats>({ count: 0, recent: [], messages: [] });
   const [showAllMessages, setShowAllMessages] = useState(false);
+  const [likes, setLikes] = useState<Record<string, number>>({});
+  const [liked, setLiked] = useState<Record<string, boolean>>({});
   // Mesajele aprobate sunt vizibile implicit; aici retinem doar randurile restranse.
   const [collapsed, setCollapsed] = useState<Record<number, boolean>>({});
   const [allCollapsed, setAllCollapsed] = useState(false);
@@ -24,18 +35,55 @@ export default function SignatureForm() {
   const loadStats = () =>
     fetch("/api/petition")
       .then((r) => r.json())
-      .then((s: Stats) =>
+      .then((s: Stats) => {
         setStats({
           count: s.count ?? 0,
           recent: s.recent ?? [],
           messages: s.messages ?? [],
-        })
-      )
+        });
+        const base: Record<string, number> = {};
+        (s.messages ?? []).forEach((m) => (base[m.id] = m.likes ?? 0));
+        setLikes(base);
+      })
       .catch(() => undefined);
 
   useEffect(() => {
     loadStats();
+    try {
+      const stored = JSON.parse(localStorage.getItem(LIKED_KEY) ?? "[]");
+      if (Array.isArray(stored)) {
+        setLiked(Object.fromEntries(stored.map((id: string) => [id, true])));
+      }
+    } catch {
+      /* ignore */
+    }
   }, []);
+
+  const like = async (id: string) => {
+    if (liked[id]) return;
+    setLiked((l) => ({ ...l, [id]: true }));
+    setLikes((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
+    try {
+      const stored = JSON.parse(localStorage.getItem(LIKED_KEY) ?? "[]");
+      const next = Array.isArray(stored) ? [...new Set([...stored, id])] : [id];
+      localStorage.setItem(LIKED_KEY, JSON.stringify(next));
+    } catch {
+      /* ignore */
+    }
+    try {
+      const res = await fetch("/api/petition/like", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      const data = await res.json();
+      if (res.ok && typeof data.likes === "number") {
+        setLikes((prev) => ({ ...prev, [id]: data.likes }));
+      }
+    } catch {
+      /* keep optimistic value */
+    }
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -161,14 +209,28 @@ export default function SignatureForm() {
           </div>
           <div className="sig-messages__list">
             {(showAllMessages ? stats.messages : stats.messages.slice(0, 6)).map(
-              (m, i) => (
-                <figure key={i} className="sig-msg">
+              (m) => (
+                <figure key={m.id} className="sig-msg">
                   <blockquote>„{m.comment}"</blockquote>
                   <figcaption>
-                    <span className="sig-msg__name">{m.name}</span>
-                    {m.city ? (
-                      <span className="sig-msg__city"> · {m.city}</span>
-                    ) : null}
+                    <span className="sig-msg__who">
+                      <span className="sig-msg__name">{m.name}</span>
+                      {m.city ? (
+                        <span className="sig-msg__city"> · {m.city}</span>
+                      ) : null}
+                    </span>
+                    <button
+                      type="button"
+                      className={`sig-like${liked[m.id] ? " sig-like--on" : ""}`}
+                      onClick={() => like(m.id)}
+                      disabled={liked[m.id]}
+                      aria-label="Apreciază acest mesaj"
+                    >
+                      <span className="sig-like__heart">
+                        {liked[m.id] ? "♥" : "♡"}
+                      </span>
+                      <span className="sig-like__n">{likes[m.id] ?? 0}</span>
+                    </button>
                   </figcaption>
                 </figure>
               )
