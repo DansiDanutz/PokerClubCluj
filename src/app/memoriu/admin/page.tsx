@@ -140,8 +140,41 @@ export default function AdminPage() {
     URL.revokeObjectURL(url);
   };
 
+  const sessionExpired = () => {
+    alert("Sesiune expirată — te rog autentifică-te din nou.");
+    logout();
+  };
+
+  const toggleVisible = async (id: string, makeVisible: boolean) => {
+    try {
+      const res = await fetch("/api/petition/admin/hide", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, id, visible: makeVisible }),
+      });
+      if (res.status === 401) return sessionExpired();
+      if (!res.ok) {
+        alert("Operațiunea a eșuat.");
+        return;
+      }
+      setRows((prev) =>
+        prev
+          ? prev.map((r) =>
+              r.id === id ? { ...r, comment_approved: makeVisible } : r
+            )
+          : prev
+      );
+    } catch {
+      alert("Eroare de rețea.");
+    }
+  };
+
   const deleteRow = async (id: string, name: string) => {
-    if (!confirm(`Ștergi semnătura „${name}"? Acțiunea nu poate fi anulată.`))
+    if (
+      !confirm(
+        `Ștergi semnătura „${name}"? Se elimină definitiv și IP-ul se blochează.`
+      )
+    )
       return;
     setDeletingId(id);
     try {
@@ -150,6 +183,7 @@ export default function AdminPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, id }),
       });
+      if (res.status === 401) return sessionExpired();
       if (!res.ok) {
         alert("Ștergerea a eșuat.");
         return;
@@ -338,7 +372,11 @@ export default function AdminPage() {
                 {r.likes > 0 && (
                   <span className="admin-card__likes">♥ {r.likes}</span>
                 )}
-                {msg && <span className="admin-card__hasmsg">💬</span>}
+                {msg && (
+                  <span className="admin-card__hasmsg">
+                    {r.comment_approved ? "💬" : "🙈"}
+                  </span>
+                )}
                 {repeat > 1 && (
                   <span className="admin-flag">IP ×{repeat}</span>
                 )}
@@ -399,14 +437,29 @@ export default function AdminPage() {
                       </div>
                     </div>
                   </div>
-                  <button
-                    type="button"
-                    className="admin-del"
-                    onClick={() => deleteRow(r.id, r.full_name)}
-                    disabled={deletingId === r.id}
-                  >
-                    {deletingId === r.id ? "..." : "🗑 Șterge semnătura"}
-                  </button>
+                  <div className="admin-actions">
+                    {msg && (
+                      <button
+                        type="button"
+                        className="admin-hide"
+                        onClick={() =>
+                          toggleVisible(r.id, !r.comment_approved)
+                        }
+                      >
+                        {r.comment_approved
+                          ? "🙈 Ascunde mesajul"
+                          : "👁 Arată mesajul"}
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      className="admin-del"
+                      onClick={() => deleteRow(r.id, r.full_name)}
+                      disabled={deletingId === r.id}
+                    >
+                      {deletingId === r.id ? "..." : "🗑 Șterge + blochează"}
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -415,11 +468,12 @@ export default function AdminPage() {
       </div>
 
       <p className="admin-note">
-        Apasă pe un rând ca să vezi toate detaliile (browser, IP, mesaj complet)
-        și butonul de ștergere; folosește „Extinde tot" ca să le deschizi pe
-        toate deodată. Rândurile roșii vin de la un IP care apare de mai multe
-        ori. Ștergerea elimină semnătura definitiv, inclusiv de pe pagina
-        publică. Datele sunt private.
+        Apasă pe un rând ca să vezi detaliile. <b>🙈 Ascunde mesajul</b> îl
+        scoate de pe pagina publică fără să anunțe pe nimeni (semnătura rămâne).
+        <b> 🗑 Șterge + blochează</b> elimină semnătura definitiv și blochează
+        IP-ul — orice postare viitoare de pe acel IP va fi ascunsă automat, în
+        tăcere. Rândurile roșii = IP care apare de mai multe ori. Datele sunt
+        private.
       </p>
     </main>
   );

@@ -454,6 +454,29 @@
   white-space: nowrap;
 }
 
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-hide {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+  color: #d4d4d8;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.admin-hide:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #f59e0b;
+}
+
 .admin-del {
   border: 1px solid rgba(255, 106, 111, 0.4);
   background: rgba(255, 106, 111, 0.1);
