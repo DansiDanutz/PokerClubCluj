@@ -74,6 +74,40 @@ export default function AdminPage() {
     setFilter("all");
   };
 
+  const exportCsv = () => {
+    const cols = ["Nr.", "Nume", "Email", "Localitate", "Data", "Mesaj", "Like-uri"];
+    const esc = (v: string | number | null) =>
+      `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const lines = [cols.map(esc).join(",")];
+    filtered.forEach((r, i) => {
+      lines.push(
+        [
+          i + 1,
+          r.full_name,
+          r.email,
+          r.city ?? "",
+          new Date(r.created_at).toLocaleString("ro-RO"),
+          r.comment ?? "",
+          r.likes ?? 0,
+        ]
+          .map(esc)
+          .join(",")
+      );
+    });
+    // BOM ca Excel sa afiseze corect diacriticele.
+    const blob = new Blob(["﻿" + lines.join("\r\n")], {
+      type: "text/csv;charset=utf-8",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const d = new Date();
+    const stamp = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    a.href = url;
+    a.download = `semnaturi-poker-cluj-${stamp}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const deleteRow = async (id: string, name: string) => {
     if (!confirm(`Ștergi semnătura „${name}"? Acțiunea nu poate fi anulată.`))
       return;
@@ -169,6 +203,9 @@ export default function AdminPage() {
           <span className="admin-login__spade">♠</span> Panou semnături
         </div>
         <div className="admin-topbar__actions">
+          <button className="admin-export" onClick={exportCsv}>
+            ⬇ Export CSV
+          </button>
           <button className="admin-ghost" onClick={refresh} disabled={loading}>
             {loading ? "..." : "↻ Reîncarcă"}
           </button>
