@@ -254,11 +254,54 @@
 .sig-msg figcaption {
   font-size: 0.78rem;
   color: var(--text-faint);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .sig-msg__name {
   font-weight: 700;
   color: #fff;
+}
+
+.sig-like {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-soft);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 150ms ease, color 150ms ease, transform 120ms ease;
+}
+
+.sig-like:hover:not(:disabled) {
+  border-color: rgba(255, 106, 111, 0.5);
+  color: #ff8a8f;
+  transform: translateY(-1px);
+}
+
+.sig-like--on {
+  border-color: rgba(255, 106, 111, 0.5);
+  background: rgba(255, 106, 111, 0.12);
+  color: #ff8a8f;
+  cursor: default;
+}
+
+.sig-like__heart {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.sig-like__n {
+  min-width: 0.8rem;
+  text-align: left;
 }
 
 .sig-messages__more {
