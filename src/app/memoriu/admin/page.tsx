@@ -14,10 +14,12 @@ type Row = {
   user_agent: string | null;
   lang: string | null;
   comment_approved: boolean;
+  flagged: boolean;
+  ip_blocked: boolean;
   likes: number;
 };
 
-type Filter = "all" | "messages" | "repeats";
+type Filter = "all" | "review" | "blocked" | "ok" | "messages" | "repeats";
 
 // Rezuma user-agent-ul intr-o eticheta scurta (OS + browser).
 function shortDevice(ua: string | null): { icon: string; text: string } {
@@ -169,6 +171,60 @@ export default function AdminPage() {
     }
   };
 
+  const restoreRow = async (id: string) => {
+    try {
+      const res = await fetch("/api/petition/admin/flag", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, id, action: "restore" }),
+      });
+      if (res.status === 401) return sessionExpired();
+      if (!res.ok) {
+        alert("Operațiunea a eșuat.");
+        return;
+      }
+      setRows((prev) =>
+        prev
+          ? prev.map((r) =>
+              r.id === id
+                ? { ...r, comment_approved: true, flagged: false, ip_blocked: false }
+                : r
+            )
+          : prev
+      );
+    } catch {
+      alert("Eroare de rețea.");
+    }
+  };
+
+  const toggleFlag = async (id: string, makeFlagged: boolean) => {
+    try {
+      const res = await fetch("/api/petition/admin/flag", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+          id,
+          action: "flag",
+          flagged: makeFlagged,
+        }),
+      });
+      if (res.status === 401) return sessionExpired();
+      if (!res.ok) {
+        alert("Operațiunea a eșuat.");
+        return;
+      }
+      setRows((prev) =>
+        prev
+          ? prev.map((r) => (r.id === id ? { ...r, flagged: makeFlagged } : r))
+          : prev
+      );
+    } catch {
+      alert("Eroare de rețea.");
+    }
+  };
+
   const deleteRow = async (id: string, name: string) => {
     if (
       !confirm(
@@ -213,12 +269,28 @@ export default function AdminPage() {
     () => (rows ?? []).reduce((s, r) => s + (r.likes ?? 0), 0),
     [rows]
   );
+  const reviewCount = useMemo(
+    () => (rows ?? []).filter((r) => r.flagged).length,
+    [rows]
+  );
+  const blockedCount = useMemo(
+    () => (rows ?? []).filter((r) => r.ip_blocked).length,
+    [rows]
+  );
+
+  const hasMsg = (r: Row) => !!(r.comment && r.comment.trim());
+  // "Corecte" = mesaj vizibil, ne-marcat, ne-blocat (a trecut testul).
+  const isClean = (r: Row) =>
+    hasMsg(r) && r.comment_approved && !r.flagged && !r.ip_blocked;
 
   const filtered = useMemo(() => {
     if (!rows) return [];
     const q = query.trim().toLowerCase();
     return rows.filter((r) => {
-      if (filter === "messages" && !(r.comment && r.comment.trim())) return false;
+      if (filter === "messages" && !hasMsg(r)) return false;
+      if (filter === "review" && !r.flagged) return false;
+      if (filter === "blocked" && !r.ip_blocked) return false;
+      if (filter === "ok" && !isClean(r)) return false;
       if (filter === "repeats" && !(r.ip && (ipCounts.get(r.ip) ?? 0) > 1))
         return false;
       if (!q) return true;
@@ -290,6 +362,14 @@ export default function AdminPage() {
           <div className="admin-stat__v">{withMessage}</div>
           <div className="admin-stat__k">Cu mesaj</div>
         </div>
+        <div className="admin-stat admin-stat--review">
+          <div className="admin-stat__v">{reviewCount}</div>
+          <div className="admin-stat__k">De analizat</div>
+        </div>
+        <div className="admin-stat admin-stat--blocked">
+          <div className="admin-stat__v">{blockedCount}</div>
+          <div className="admin-stat__k">Blocate</div>
+        </div>
         <div className="admin-stat">
           <div className="admin-stat__v">{ipCounts.size}</div>
           <div className="admin-stat__k">IP-uri unice</div>
@@ -312,7 +392,10 @@ export default function AdminPage() {
           {(
             [
               ["all", "Toate"],
-              ["messages", "Doar cu mesaj"],
+              ["review", "🟠 De analizat"],
+              ["blocked", "⛔ Blocate"],
+              ["ok", "✅ Corecte"],
+              ["messages", "Cu mesaj"],
               ["repeats", "IP repetat"],
             ] as [Filter, string][]
           ).map(([k, label]) => (
@@ -355,7 +438,15 @@ export default function AdminPage() {
           return (
             <div
               key={r.id}
-              className={`admin-card${repeat > 1 ? " admin-card--repeat" : ""}`}
+              className={`admin-card${
+                r.ip_blocked
+                  ? " admin-card--blocked"
+                  : r.flagged
+                    ? " admin-card--review"
+                    : repeat > 1
+                      ? " admin-card--repeat"
+                      : ""
+              }`}
             >
               <button
                 type="button"
@@ -369,6 +460,8 @@ export default function AdminPage() {
                 <span className="admin-card__dev">
                   {dev.icon} {dev.text}
                 </span>
+                {r.flagged && <span className="admin-badge admin-badge--review">DE ANALIZAT</span>}
+                {r.ip_blocked && <span className="admin-badge admin-badge--blocked">BLOCAT</span>}
                 {r.likes > 0 && (
                   <span className="admin-card__likes">♥ {r.likes}</span>
                 )}
@@ -451,6 +544,24 @@ export default function AdminPage() {
                           : "👁 Arată mesajul"}
                       </button>
                     )}
+                    {msg && (
+                      <button
+                        type="button"
+                        className="admin-hide"
+                        onClick={() => toggleFlag(r.id, !r.flagged)}
+                      >
+                        {r.flagged ? "⚐ Scoate din analiză" : "🟠 Marchează"}
+                      </button>
+                    )}
+                    {(r.flagged || r.ip_blocked || !r.comment_approved) && (
+                      <button
+                        type="button"
+                        className="admin-restore"
+                        onClick={() => restoreRow(r.id)}
+                      >
+                        ♻ Restore
+                      </button>
+                    )}
                     <button
                       type="button"
                       className="admin-del"
@@ -468,12 +579,15 @@ export default function AdminPage() {
       </div>
 
       <p className="admin-note">
-        Apasă pe un rând ca să vezi detaliile. <b>🙈 Ascunde mesajul</b> îl
-        scoate de pe pagina publică fără să anunțe pe nimeni (semnătura rămâne).
-        <b> 🗑 Șterge + blochează</b> elimină semnătura definitiv și blochează
-        IP-ul — orice postare viitoare de pe acel IP va fi ascunsă automat, în
-        tăcere. Rândurile roșii = IP care apare de mai multe ori. Datele sunt
-        private.
+        <b>🟠 Portocaliu = De analizat</b>: comentarii pe care le-am marcat drept
+        periculoase sau nepotrivite (obscene, abuzive, pro-interdicție, zgomot).
+        Sunt deja ascunse de pe pagina publică — citește-le și decide.
+        <b> ⛔ Roșu = Blocat</b>: IP interzis. Butoane pe fiecare rând:
+        <b> 🙈 Ascunde/👁 Arată</b> mesajul, <b>🟠 Marchează</b> pentru analiză,
+        <b> ♻ Restore</b> (reafișează + scoate din analiză + deblochează IP-ul),
+        <b> 🗑 Șterge + blochează</b> (elimină definitiv și blochează IP-ul, iar
+        postările viitoare de pe el sunt ascunse automat, în tăcere). Rândurile
+        cu „IP ×N" = același IP semnat de mai multe ori. Datele sunt private.
       </p>
     </main>
   );

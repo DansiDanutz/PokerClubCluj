@@ -140,7 +140,7 @@
 
 .admin-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 10px;
   margin-bottom: 18px;
 }
@@ -232,6 +232,59 @@
 .admin-card--repeat {
   border-color: rgba(255, 106, 111, 0.35);
   background: rgba(255, 106, 111, 0.06);
+}
+
+.admin-card--review {
+  border-color: rgba(245, 158, 11, 0.55);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.admin-card--blocked {
+  border-color: rgba(255, 80, 80, 0.6);
+  background: rgba(255, 80, 80, 0.12);
+}
+
+.admin-badge {
+  flex-shrink: 0;
+  font-weight: 800;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  border-radius: 6px;
+  padding: 2px 7px;
+}
+
+.admin-badge--review {
+  background: #f59e0b;
+  color: #1b1306;
+}
+
+.admin-badge--blocked {
+  background: #ff5050;
+  color: #1b0606;
+}
+
+.admin-stat--review .admin-stat__v {
+  color: #f59e0b;
+}
+
+.admin-stat--blocked .admin-stat__v {
+  color: #ff7a7a;
+}
+
+.admin-restore {
+  border: 1px solid rgba(61, 214, 160, 0.5);
+  background: rgba(61, 214, 160, 0.12);
+  color: #3dd6a0;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.admin-restore:hover {
+  background: rgba(61, 214, 160, 0.22);
 }
 
 .admin-card__head {
@@ -503,6 +556,12 @@
   font-size: 0.78rem;
   margin-top: 16px;
   line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .admin-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 640px) {
