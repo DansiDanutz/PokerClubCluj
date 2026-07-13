@@ -123,6 +123,21 @@
   color: #f59e0b;
 }
 
+.admin-export {
+  border: 0;
+  border-radius: 9px;
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffd07a, #f59e0b);
+  color: #1b1306;
+}
+
+.admin-export:hover {
+  filter: brightness(1.05);
+}
+
 .admin-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
