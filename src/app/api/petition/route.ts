@@ -116,6 +116,13 @@ export async function POST(req: NextRequest) {
     );
   }
   if (!res.ok) {
+    const detail = await res.text().catch(() => "");
+    if (detail.includes("blocked_ip")) {
+      return NextResponse.json(
+        { error: "Aceasta conexiune a fost blocata si nu poate semna." },
+        { status: 403 }
+      );
+    }
     return NextResponse.json(
       { error: "A aparut o eroare. Va rugam incercati din nou." },
       { status: 500 }
