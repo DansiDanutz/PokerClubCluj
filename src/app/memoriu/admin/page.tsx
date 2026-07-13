@@ -416,8 +416,9 @@ export default function AdminPage() {
 
       <p className="admin-note">
         Apasă pe un rând ca să vezi toate detaliile (browser, IP, mesaj complet)
-        și butonul de ștergere. Rândurile roșii vin de la un IP care apare de mai
-        multe ori. Ștergerea elimină semnătura definitiv, inclusiv de pe pagina
+        și butonul de ștergere; folosește „Extinde tot" ca să le deschizi pe
+        toate deodată. Rândurile roșii vin de la un IP care apare de mai multe
+        ori. Ștergerea elimină semnătura definitiv, inclusiv de pe pagina
         publică. Datele sunt private.
       </p>
     </main>
