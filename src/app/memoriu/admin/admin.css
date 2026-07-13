@@ -207,7 +207,161 @@
 .admin-count {
   font-size: 0.75rem;
   color: #71717a;
-  margin-bottom: 10px;
+}
+
+.admin-controls--sub {
+  margin-bottom: 12px;
+  margin-top: 4px;
+}
+
+/* Card list */
+
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: #111827;
+  overflow: hidden;
+}
+
+.admin-card--repeat {
+  border-color: rgba(255, 106, 111, 0.35);
+  background: rgba(255, 106, 111, 0.06);
+}
+
+.admin-card__head {
+  width: 100%;
+  border: 0;
+  background: none;
+  color: #e4e4e7;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.86rem;
+}
+
+.admin-card__head:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.admin-card__caret {
+  color: #f59e0b;
+  flex-shrink: 0;
+  width: 12px;
+}
+
+.admin-card__name {
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.admin-card__email {
+  color: #a1a1aa;
+  font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.admin-card__dev {
+  color: #71717a;
+  font-size: 0.76rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.admin-card__likes {
+  color: #ff8a8f;
+  font-weight: 700;
+  font-size: 0.78rem;
+  flex-shrink: 0;
+}
+
+.admin-card__hasmsg {
+  flex-shrink: 0;
+}
+
+.admin-card__date {
+  color: #71717a;
+  font-size: 0.76rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-card__preview {
+  padding: 0 16px 12px 40px;
+  color: #c7d2e4;
+  font-size: 0.82rem;
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-card__detail {
+  padding: 4px 16px 16px 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.admin-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 20px;
+  margin: 12px 0;
+}
+
+.admin-field__k {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #71717a;
+  margin-bottom: 3px;
+}
+
+.admin-field__v {
+  font-size: 0.84rem;
+  color: #e4e4e7;
+  overflow-wrap: anywhere;
+}
+
+.admin-field--msg .admin-field__v {
+  font-style: italic;
+  color: #fff;
+  line-height: 1.55;
+  margin-top: 8px;
+}
+
+.admin-field--wide {
+  grid-column: 1 / -1;
+}
+
+.admin-ua-full {
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 0.72rem;
+  color: #a1a1aa;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .admin-detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-card__email,
+  .admin-card__dev {
+    display: none;
+  }
 }
 
 .admin-table-wrap {
