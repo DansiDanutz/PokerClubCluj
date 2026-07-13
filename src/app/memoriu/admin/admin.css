@@ -601,6 +601,16 @@
 @media (max-width: 640px) {
   .admin-shell {
     padding: 16px 12px 48px;
+    overflow-x: hidden;
+  }
+
+  .admin-controls {
+    min-width: 0;
+  }
+  /* Banda de filtre deruleaza INTERN, nu lateste pagina */
+  .admin-filters {
+    min-width: 0;
+    max-width: 100%;
   }
 
   .admin-topbar {
