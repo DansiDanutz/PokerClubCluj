@@ -19,6 +19,34 @@ type Row = {
 
 type Filter = "all" | "messages" | "repeats";
 
+// Rezuma user-agent-ul intr-o eticheta scurta (OS + browser).
+function shortDevice(ua: string | null): { icon: string; text: string } {
+  if (!ua) return { icon: "❔", text: "necunoscut" };
+  const isFB = /FBAN|FBAV|FB_IAB|FB4A/.test(ua);
+  const isIG = /Instagram/.test(ua);
+  let os = "";
+  if (/Windows/.test(ua)) os = "Windows";
+  else if (/Android/.test(ua)) os = "Android";
+  else if (/iPhone/.test(ua)) os = "iPhone";
+  else if (/iPad/.test(ua)) os = "iPad";
+  else if (/Mac OS X|Macintosh/.test(ua)) os = "Mac";
+  else if (/Linux/.test(ua)) os = "Linux";
+  else os = "Alt";
+  let br = "";
+  if (isIG) br = "Instagram";
+  else if (isFB) br = "Facebook";
+  else if (/Edg\//.test(ua)) br = "Edge";
+  else if (/OPR\/|Opera/.test(ua)) br = "Opera";
+  else if (/CriOS|Chrome\//.test(ua)) br = "Chrome";
+  else if (/Firefox/.test(ua)) br = "Firefox";
+  else if (/Safari/.test(ua)) br = "Safari";
+  const mobile = /Android|iPhone|iPad|Mobile/.test(ua);
+  return {
+    icon: mobile ? "📱" : "💻",
+    text: [os, br].filter(Boolean).join(" · "),
+  };
+}
+
 export default function AdminPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,6 +56,10 @@ export default function AdminPage() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [openRows, setOpenRows] = useState<Record<string, boolean>>({});
+
+  const toggleRow = (id: string) =>
+    setOpenRows((o) => ({ ...o, [id]: !o[id] }));
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -261,67 +293,132 @@ export default function AdminPage() {
         </div>
       </div>
 
-      <div className="admin-count">{filtered.length} rezultate afișate</div>
+      <div className="admin-controls admin-controls--sub">
+        <div className="admin-count">{filtered.length} rezultate afișate</div>
+        <div className="admin-filters">
+          <button
+            className="admin-chip"
+            onClick={() =>
+              setOpenRows(
+                Object.fromEntries(filtered.map((r) => [r.id, true]))
+              )
+            }
+          >
+            ▾ Extinde tot
+          </button>
+          <button className="admin-chip" onClick={() => setOpenRows({})}>
+            ▸ Restrânge tot
+          </button>
+        </div>
+      </div>
 
-      <div className="admin-table-wrap">
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Nume</th>
-              <th>Email</th>
-              <th>Oraș</th>
-              <th>IP</th>
-              <th>Dispozitiv / browser</th>
-              <th>Mesaj</th>
-              <th>♥</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((r) => {
-              const repeat = r.ip ? (ipCounts.get(r.ip) ?? 0) : 0;
-              return (
-                <tr key={r.id} className={repeat > 1 ? "admin-row--repeat" : ""}>
-                  <td className="admin-nowrap">
-                    {new Date(r.created_at).toLocaleString("ro-RO")}
-                  </td>
-                  <td className="admin-strong">{r.full_name}</td>
-                  <td>{r.email}</td>
-                  <td>{r.city ?? "—"}</td>
-                  <td className="admin-mono">
-                    {r.ip ?? "—"}
-                    {repeat > 1 && <span className="admin-flag">×{repeat}</span>}
-                  </td>
-                  <td className="admin-ua" title={r.user_agent ?? ""}>
-                    {r.user_agent ?? "—"}
-                    {r.lang ? <div className="admin-lang">{r.lang}</div> : null}
-                  </td>
-                  <td className="admin-comment">{r.comment ?? "—"}</td>
-                  <td className="admin-likes">{r.likes > 0 ? `♥ ${r.likes}` : "—"}</td>
-                  <td>
-                    <button
-                      type="button"
-                      className="admin-del"
-                      onClick={() => deleteRow(r.id, r.full_name)}
-                      disabled={deletingId === r.id}
-                      title="Șterge semnătura"
-                    >
-                      {deletingId === r.id ? "..." : "🗑 Șterge"}
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="admin-list">
+        {filtered.map((r) => {
+          const repeat = r.ip ? (ipCounts.get(r.ip) ?? 0) : 0;
+          const open = !!openRows[r.id];
+          const dev = shortDevice(r.user_agent);
+          const msg = r.comment?.trim() ?? "";
+          return (
+            <div
+              key={r.id}
+              className={`admin-card${repeat > 1 ? " admin-card--repeat" : ""}`}
+            >
+              <button
+                type="button"
+                className="admin-card__head"
+                onClick={() => toggleRow(r.id)}
+                aria-expanded={open}
+              >
+                <span className="admin-card__caret">{open ? "▾" : "▸"}</span>
+                <span className="admin-card__name">{r.full_name}</span>
+                <span className="admin-card__email">{r.email}</span>
+                <span className="admin-card__dev">
+                  {dev.icon} {dev.text}
+                </span>
+                {r.likes > 0 && (
+                  <span className="admin-card__likes">♥ {r.likes}</span>
+                )}
+                {msg && <span className="admin-card__hasmsg">💬</span>}
+                {repeat > 1 && (
+                  <span className="admin-flag">IP ×{repeat}</span>
+                )}
+                <span className="admin-card__date">
+                  {new Date(r.created_at).toLocaleString("ro-RO", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </span>
+              </button>
+
+              {msg && !open && (
+                <div className="admin-card__preview">
+                  „{msg.length > 120 ? msg.slice(0, 120) + "…" : msg}"
+                </div>
+              )}
+
+              {open && (
+                <div className="admin-card__detail">
+                  {msg && (
+                    <div className="admin-field admin-field--msg">
+                      <div className="admin-field__k">Mesaj</div>
+                      <div className="admin-field__v">„{msg}"</div>
+                    </div>
+                  )}
+                  <div className="admin-detail-grid">
+                    <div className="admin-field">
+                      <div className="admin-field__k">Oraș</div>
+                      <div className="admin-field__v">{r.city ?? "—"}</div>
+                    </div>
+                    <div className="admin-field">
+                      <div className="admin-field__k">Data completă</div>
+                      <div className="admin-field__v">
+                        {new Date(r.created_at).toLocaleString("ro-RO")}
+                      </div>
+                    </div>
+                    <div className="admin-field">
+                      <div className="admin-field__k">IP</div>
+                      <div className="admin-field__v admin-mono">
+                        {r.ip ?? "—"}
+                        {repeat > 1 && (
+                          <span className="admin-flag">×{repeat}</span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="admin-field">
+                      <div className="admin-field__k">Limbă</div>
+                      <div className="admin-field__v admin-mono">
+                        {r.lang ?? "—"}
+                      </div>
+                    </div>
+                    <div className="admin-field admin-field--wide">
+                      <div className="admin-field__k">Browser complet</div>
+                      <div className="admin-field__v admin-ua-full">
+                        {r.user_agent ?? "—"}
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="admin-del"
+                    onClick={() => deleteRow(r.id, r.full_name)}
+                    disabled={deletingId === r.id}
+                  >
+                    {deletingId === r.id ? "..." : "🗑 Șterge semnătura"}
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       <p className="admin-note">
-        Rândurile roșii vin de la un IP care apare de mai multe ori — util pentru
-        a depista aceeași persoană care semnează repetat cu nume diferite.
-        Ștergerea unei semnături o elimină definitiv, inclusiv de pe pagina
-        publică. Aceste date sunt private.
+        Apasă pe un rând ca să vezi toate detaliile (browser, IP, mesaj complet)
+        și butonul de ștergere. Rândurile roșii vin de la un IP care apare de mai
+        multe ori. Ștergerea elimină semnătura definitiv, inclusiv de pe pagina
+        publică. Datele sunt private.
       </p>
     </main>
   );
