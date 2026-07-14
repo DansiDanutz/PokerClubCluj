@@ -161,10 +161,21 @@ export default function SignatureForm() {
             onChange={(e) => setCity(e.target.value)}
             className="sig-input"
           />
+          <div className="sig-prompt">
+            <div className="sig-prompt__title">
+              💬 Spune-ți povestea (optional, dar contează mult)
+            </div>
+            <div className="sig-prompt__hint">
+              Câteva idei: cum te-a învățat pokerul să iei decizii sub presiune ·
+              să-ți gestionezi banii și răbdarea · să citești oamenii · să pierzi
+              elegant și să-ți păstrezi echilibrul. O experiență reală, în
+              cuvintele tale.
+            </div>
+          </div>
           <textarea
             maxLength={2000}
-            rows={3}
-            placeholder="Mesaj pentru Consiliul Local (optional)"
+            rows={4}
+            placeholder="Ex: Pokerul m-a învățat că..."
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             className="sig-input sig-input--area"
