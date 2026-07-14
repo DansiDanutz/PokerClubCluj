@@ -14,12 +14,17 @@ type Message = {
 type Stats = { count: number; recent: RecentSigner[]; messages: Message[] };
 
 const LIKED_KEY = "pokercluj_liked_ids";
+const SIGNED_KEY = "pokercluj_signed";
+const PAGE_URL = "https://poker-club-cluj.vercel.app/memoriu";
+const FB_SHARE = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(PAGE_URL)}`;
 
 export default function SignatureForm() {
   const [stats, setStats] = useState<Stats>({ count: 0, recent: [], messages: [] });
   const [showAllMessages, setShowAllMessages] = useState(false);
   const [likes, setLikes] = useState<Record<string, number>>({});
   const [liked, setLiked] = useState<Record<string, boolean>>({});
+  const [hasSigned, setHasSigned] = useState(false);
+  const [likeGate, setLikeGate] = useState(false);
   // Mesajele aprobate sunt vizibile implicit; aici retinem doar randurile restranse.
   const [collapsed, setCollapsed] = useState<Record<number, boolean>>({});
   const [allCollapsed, setAllCollapsed] = useState(false);
@@ -57,10 +62,17 @@ export default function SignatureForm() {
     } catch {
       /* ignore */
     }
+    if (localStorage.getItem(SIGNED_KEY) === "1") setHasSigned(true);
   }, []);
 
   const like = async (id: string) => {
     if (liked[id]) return;
+    // Poti aprecia poveștile doar dupa ce ai semnat memoriul.
+    if (!hasSigned) {
+      setLikeGate(true);
+      document.getElementById("semneaza")?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
     setLiked((l) => ({ ...l, [id]: true }));
     setLikes((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
     try {
@@ -100,6 +112,13 @@ export default function SignatureForm() {
         return;
       }
       setStatus({ kind: "done" });
+      setHasSigned(true);
+      setLikeGate(false);
+      try {
+        localStorage.setItem(SIGNED_KEY, "1");
+      } catch {
+        /* ignore */
+      }
       setFullName("");
       setEmail("");
       setCity("");
@@ -124,11 +143,23 @@ export default function SignatureForm() {
 
       {status.kind === "done" ? (
         <div className="sig-success">
-          <div className="sig-success__title">Multumim pentru sustinere!</div>
+          <div className="sig-success__title">Mulțumim pentru susținere! ♠</div>
           <p>
-            Semnatura dumneavoastra a fost inregistrata si va insoti memoriul
-            depus la Primaria Cluj-Napoca.
+            Semnătura ta a fost înregistrată și va însoți memoriul depus la
+            Primăria Cluj-Napoca. Acum poți aprecia poveștile celorlalți.
           </p>
+          <p className="sig-success__share-hint">
+            📣 Distribuie povestea ta pe Facebook și adună Like-uri — cele mai
+            frumoase 10 povești câștigă premii la Player&apos;s Poker Club.
+          </p>
+          <a
+            className="sig-share-btn"
+            href={FB_SHARE}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            📘 Distribuie pe Facebook
+          </a>
         </div>
       ) : (
         <form onSubmit={submit} className="sig-form">
@@ -223,6 +254,17 @@ export default function SignatureForm() {
           <div className="sig-messages__title">
             Mesaje de la susținători ({stats.messages.length})
           </div>
+          <div className="sig-messages__sub">
+            {hasSigned
+              ? "♥ Apreciază poveștile care îți plac."
+              : "♥ Semnează memoriul ca să poți aprecia poveștile."}
+          </div>
+          {likeGate && !hasSigned && (
+            <div className="sig-gate">
+              Ca să apreciezi o poveste, semnează întâi memoriul (formularul de
+              mai sus). Durează un minut.
+            </div>
+          )}
           <div className="sig-messages__list">
             {(showAllMessages ? stats.messages : stats.messages.slice(0, 6)).map(
               (m) => (
