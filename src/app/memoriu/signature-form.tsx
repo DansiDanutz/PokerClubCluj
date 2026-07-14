@@ -150,7 +150,7 @@ export default function SignatureForm() {
           </p>
           <p className="sig-success__share-hint">
             📣 Distribuie povestea ta pe Facebook și adună Like-uri — cele mai
-            frumoase 10 povești câștigă premii la Player&apos;s Poker Club.
+            apreciate experiențe rămân în top, sub ochii Consiliului Local.
           </p>
           <a
             className="sig-share-btn"
@@ -203,9 +203,9 @@ export default function SignatureForm() {
               cuvintele tale.
             </div>
             <div className="sig-prompt__prize">
-              🏆 Cele mai frumoase 10 povești reale câștigă: 5 × premiu de 300
-              lei la cash game + 5 × buy-in de 300 lei la turneele de la Player&apos;s
-              Poker Club.
+              ♥ Poveștile voastre sunt apreciate de comunitate. Cele mai
+              apreciate (după numărul de Like-uri) rămân în top, ca membrii
+              Consiliului Local să citească cele mai frumoase experiențe.
             </div>
           </div>
           <textarea
