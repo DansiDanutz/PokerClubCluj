@@ -171,6 +171,11 @@ export default function SignatureForm() {
               elegant și să-ți păstrezi echilibrul. O experiență reală, în
               cuvintele tale.
             </div>
+            <div className="sig-prompt__prize">
+              🏆 Cele mai frumoase 10 povești reale câștigă: 5 × premiu de 300
+              lei la cash game + 5 × buy-in de 300 lei la turneele de la Player&apos;s
+              Poker Club.
+            </div>
           </div>
           <textarea
             maxLength={2000}

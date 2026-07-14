@@ -175,6 +175,16 @@
   color: var(--text-soft);
 }
 
+.sig-prompt__prize {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line-strong);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--gold);
+}
+
 .sig-honeypot {
   display: none;
 }
