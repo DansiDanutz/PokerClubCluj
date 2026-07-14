@@ -52,6 +52,22 @@ export default function MemoriuPage() {
           </p>
         </div>
 
+        <div className="memoriu-video">
+          <div className="memoriu-video__label">
+            🎬 Vezi filmul — de ce pokerul nu e păcănele
+          </div>
+          <video
+            className="memoriu-video__player"
+            controls
+            preload="metadata"
+            playsInline
+            poster="/manifest-poster.jpg"
+          >
+            <source src="/manifest-poker-cluj.mp4" type="video/mp4" />
+            Browserul tău nu poate reda acest video.
+          </video>
+        </div>
+
         <div className="memoriu-panel memoriu-dark" style={{ marginBottom: "36px" }}>
           <MemoriuSummary />
           <MemoriuShield />
