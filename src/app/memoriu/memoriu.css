@@ -237,6 +237,48 @@
   color: var(--text-soft);
 }
 
+.sig-success__share-hint {
+  margin-top: 10px !important;
+  font-weight: 600;
+  color: var(--gold) !important;
+}
+
+.sig-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 11px 20px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #fff;
+  background: #1877f2;
+  transition: transform 160ms ease, filter 160ms ease;
+}
+
+.sig-share-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.sig-messages__sub {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+  margin: -6px 0 12px;
+}
+
+.sig-gate {
+  border: 1px solid var(--line-strong);
+  background: var(--gold-soft);
+  color: var(--gold);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
 .sig-messages {
   margin-top: 24px;
   padding-top: 18px;
