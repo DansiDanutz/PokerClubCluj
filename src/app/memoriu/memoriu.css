@@ -34,6 +34,30 @@
   margin-bottom: 36px;
 }
 
+.memoriu-video {
+  margin-bottom: 36px;
+}
+
+.memoriu-video__label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.memoriu-video__player {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line-strong);
+  background: #000;
+  box-shadow: var(--shadow);
+  aspect-ratio: 16 / 9;
+}
+
 .memoriu-panel {
   background: var(--panel-strong);
   border: 1px solid var(--line);
