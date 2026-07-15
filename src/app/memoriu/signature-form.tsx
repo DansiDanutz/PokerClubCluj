@@ -10,6 +10,7 @@ type Message = {
   date: string;
   comment: string;
   likes: number;
+  featured?: boolean;
 };
 type Stats = { count: number; recent: RecentSigner[]; messages: Message[] };
 
@@ -294,7 +295,13 @@ export default function SignatureForm() {
           <div className="sig-messages__list">
             {(showAllMessages ? stats.messages : stats.messages.slice(0, 6)).map(
               (m) => (
-                <figure key={m.id} className="sig-msg">
+                <figure
+                  key={m.id}
+                  className={`sig-msg${m.featured ? " sig-msg--featured" : ""}`}
+                >
+                  {m.featured && (
+                    <div className="sig-msg__badge">★ Mesajul organizatorului</div>
+                  )}
                   <blockquote>„{m.comment}"</blockquote>
                   <figcaption>
                     <span className="sig-msg__who">

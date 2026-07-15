@@ -355,6 +355,28 @@
   padding: 12px 15px;
 }
 
+.sig-msg--featured {
+  border-color: rgba(245, 158, 11, 0.55);
+  border-left-width: 3px;
+  background: rgba(245, 158, 11, 0.1);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.1);
+}
+
+.sig-msg__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffd07a, var(--gold));
+  color: #1b1306;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .sig-msg blockquote {
   margin: 0 0 8px;
   font-size: 0.86rem;
