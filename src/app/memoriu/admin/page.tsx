@@ -15,6 +15,7 @@ type Row = {
   lang: string | null;
   comment_approved: boolean;
   flagged: boolean;
+  featured: boolean;
   ip_blocked: boolean;
   likes: number;
 };
@@ -218,6 +219,28 @@ export default function AdminPage() {
           ip && r.ip === ip ? { ...r, ip_blocked: makeBlocked } : r
         );
       });
+    } catch {
+      alert("Eroare de rețea.");
+    }
+  };
+
+  const toggleFeatured = async (id: string, makeFeatured: boolean) => {
+    try {
+      const res = await fetch("/api/petition/admin/feature", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, id, featured: makeFeatured }),
+      });
+      if (res.status === 401) return sessionExpired();
+      if (!res.ok) {
+        alert("Operațiunea a eșuat.");
+        return;
+      }
+      setRows((prev) =>
+        prev
+          ? prev.map((r) => (r.id === id ? { ...r, featured: makeFeatured } : r))
+          : prev
+      );
     } catch {
       alert("Eroare de rețea.");
     }
@@ -486,6 +509,7 @@ export default function AdminPage() {
                 <span className="admin-card__dev">
                   {dev.icon} {dev.text}
                 </span>
+                {r.featured && <span className="admin-badge admin-badge--featured">★ ORGANIZATOR</span>}
                 {r.flagged && <span className="admin-badge admin-badge--review">DE ANALIZAT</span>}
                 {r.ip_blocked && <span className="admin-badge admin-badge--blocked">BLOCAT</span>}
                 {r.likes > 0 && (
@@ -579,6 +603,17 @@ export default function AdminPage() {
                         {r.flagged ? "⚐ Scoate din analiză" : "🟠 Marchează"}
                       </button>
                     )}
+                    {msg && (
+                      <button
+                        type="button"
+                        className={r.featured ? "admin-allow" : "admin-feature"}
+                        onClick={() => toggleFeatured(r.id, !r.featured)}
+                      >
+                        {r.featured
+                          ? "★ Scoate din top (organizator)"
+                          : "☆ Fixează sus (mesaj organizator)"}
+                      </button>
+                    )}
                     {r.ip_blocked ? (
                       <button
                         type="button"
@@ -629,7 +664,9 @@ export default function AdminPage() {
         <b> 🙈 Ascunde/👁 Arată</b> mesajul, <b>🟠 Marchează</b> pentru analiză,
         <b> ⛔ Block</b> / <b>✅ Allow</b> blochează sau deblochează IP-ul (fără
         ștergere), <b> ♻ Restore</b> (reafișează + scoate din analiză +
-        deblochează), <b> 🗑 Șterge</b> (elimină definitiv). Postările viitoare
+        deblochează), <b> ☆ Fixează sus</b> (pune mesajul în vârf, marcat public
+        drept „mesaj al organizatorului" — nu adaugă like-uri false),
+        <b> 🗑 Șterge</b> (elimină definitiv). Postările viitoare
         de pe un IP blocat sunt ascunse automat, în tăcere. Rândurile cu „IP ×N"
         = același IP semnat de mai multe ori. Datele sunt private.
       </p>

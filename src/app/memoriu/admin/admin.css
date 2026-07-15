@@ -263,6 +263,27 @@
   color: #1b0606;
 }
 
+.admin-badge--featured {
+  background: linear-gradient(135deg, #ffd07a, #f59e0b);
+  color: #1b1306;
+}
+
+.admin-feature {
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.12);
+  color: #ffcf87;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.admin-feature:hover {
+  background: rgba(245, 158, 11, 0.22);
+}
+
 .admin-stat--review .admin-stat__v {
   color: #f59e0b;
 }

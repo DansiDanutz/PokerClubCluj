@@ -88,6 +88,11 @@ export default function MemoriuPage() {
             <source src="/manifest-poker-cluj.mp4" type="video/mp4" />
             Browserul tău nu poate reda acest video.
           </video>
+          <div className="memoriu-video__cta">
+            <a href="#semneaza" className="button button--primary">
+              ✍️ Semnează memoriul
+            </a>
+          </div>
         </div>
 
         <div className="memoriu-panel memoriu-dark" style={{ marginBottom: "36px" }}>

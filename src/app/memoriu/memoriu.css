@@ -58,6 +58,12 @@
   aspect-ratio: 16 / 9;
 }
 
+.memoriu-video__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .memoriu-panel {
   background: var(--panel-strong);
   border: 1px solid var(--line);
@@ -303,6 +309,17 @@
   margin-bottom: 12px;
 }
 
+.sig-gate--top {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.sig-gate--top strong {
+  font-weight: 800;
+}
+
 .sig-messages {
   margin-top: 24px;
   padding-top: 18px;
@@ -336,6 +353,28 @@
   border-radius: 10px;
   background: rgba(245, 158, 11, 0.05);
   padding: 12px 15px;
+}
+
+.sig-msg--featured {
+  border-color: rgba(245, 158, 11, 0.55);
+  border-left-width: 3px;
+  background: rgba(245, 158, 11, 0.1);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.1);
+}
+
+.sig-msg__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffd07a, var(--gold));
+  color: #1b1306;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .sig-msg blockquote {
