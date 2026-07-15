@@ -25,6 +25,9 @@ export default function SignatureForm() {
   const [liked, setLiked] = useState<Record<string, boolean>>({});
   const [hasSigned, setHasSigned] = useState(false);
   const [likeGate, setLikeGate] = useState(false);
+  // Mesajul pe care vizitatorul a incercat sa-l aprecieze inainte de a semna;
+  // dupa semnare like-ul se inregistreaza automat, ca intentia sa nu se piarda.
+  const [pendingLike, setPendingLike] = useState<string | null>(null);
   // Mesajele aprobate sunt vizibile implicit; aici retinem doar randurile restranse.
   const [collapsed, setCollapsed] = useState<Record<number, boolean>>({});
   const [allCollapsed, setAllCollapsed] = useState(false);
@@ -65,14 +68,9 @@ export default function SignatureForm() {
     if (localStorage.getItem(SIGNED_KEY) === "1") setHasSigned(true);
   }, []);
 
-  const like = async (id: string) => {
-    if (liked[id]) return;
-    // Poti aprecia poveștile doar dupa ce ai semnat memoriul.
-    if (!hasSigned) {
-      setLikeGate(true);
-      document.getElementById("semneaza")?.scrollIntoView({ behavior: "smooth" });
-      return;
-    }
+  // Inregistreaza efectiv aprecierea (optimist + pe server). Presupune ca
+  // vizitatorul a semnat deja; gating-ul se face in `like`.
+  const applyLike = async (id: string) => {
     setLiked((l) => ({ ...l, [id]: true }));
     setLikes((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
     try {
@@ -95,6 +93,19 @@ export default function SignatureForm() {
     } catch {
       /* keep optimistic value */
     }
+  };
+
+  const like = (id: string) => {
+    if (liked[id]) return;
+    // Poti aprecia poveștile doar dupa ce ai semnat memoriul. Retinem intentia
+    // ca sa o putem inregistra automat imediat dupa semnare.
+    if (!hasSigned) {
+      setPendingLike(id);
+      setLikeGate(true);
+      document.getElementById("semneaza")?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+    void applyLike(id);
   };
 
   const submit = async (e: React.FormEvent) => {
@@ -123,6 +134,12 @@ export default function SignatureForm() {
       setEmail("");
       setCity("");
       setComment("");
+      // Daca a incercat sa aprecieze un mesaj inainte de a semna, inregistram
+      // acum like-ul ca intentia sa nu se piarda si mesajul sa urce in top.
+      if (pendingLike) {
+        await applyLike(pendingLike);
+        setPendingLike(null);
+      }
       loadStats();
     } catch {
       setStatus({ kind: "error", message: "A aparut o eroare de retea. Incercati din nou." });
@@ -140,6 +157,14 @@ export default function SignatureForm() {
           memoriu
         </div>
       </div>
+
+      {likeGate && !hasSigned && (
+        <div className="sig-gate sig-gate--top" role="alert">
+          ♥ Vrei ca like-ul tău să conteze?{" "}
+          <strong>Semnează memoriul mai jos</strong> — durează un minut, iar
+          aprecierea ta se înregistrează automat imediat după.
+        </div>
+      )}
 
       {status.kind === "done" ? (
         <div className="sig-success">
@@ -261,8 +286,9 @@ export default function SignatureForm() {
           </div>
           {likeGate && !hasSigned && (
             <div className="sig-gate">
-              Ca să apreciezi o poveste, semnează întâi memoriul (formularul de
-              mai sus). Durează un minut.
+              Ca like-ul tău să conteze, semnează întâi memoriul (formularul de
+              mai sus). Durează un minut, apoi aprecierea ta se înregistrează
+              automat.
             </div>
           )}
           <div className="sig-messages__list">
