@@ -58,6 +58,12 @@
   aspect-ratio: 16 / 9;
 }
 
+.memoriu-video__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .memoriu-panel {
   background: var(--panel-strong);
   border: 1px solid var(--line);
