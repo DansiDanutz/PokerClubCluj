@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PokerClubCluj security audit — 2026-07-26</title>
+  <style>
+    :root { color-scheme: light dark; --paper:#f6f0e3; --ink:#241f18; --line:#a99b83; --fixed:#177245; --open:#a35b00; }
+    @media (prefers-color-scheme: dark) { :root { --paper:#191713; --ink:#eee5d4; --line:#655d50; --fixed:#63d69c; --open:#f4b45f; } }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 Georgia,serif; }
+    main { width:min(920px,calc(100% - 32px)); margin:48px auto; }
+    h1,h2 { line-height:1.15; }
+    h1 { font-size:clamp(2rem,6vw,4rem); margin-bottom:.25rem; }
+    h2 { border-bottom:1px solid var(--line); padding-bottom:.35rem; margin-top:2.5rem; }
+    .meta { color:var(--ink); opacity:.72; }
+    .scorecard,.register { width:100%; border-collapse:collapse; }
+    th,td { padding:.7rem; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    .chip { display:inline-block; padding:.12rem .55rem; border:1px solid currentColor; border-radius:999px; font:700 .76rem/1.4 system-ui,sans-serif; text-transform:uppercase; letter-spacing:.04em; }
+    .fixed { color:var(--fixed); }
+    .open { color:var(--open); }
+    code { font-size:.9em; }
+    pre { overflow:auto; border:1px solid var(--line); padding:1rem; background:color-mix(in srgb,var(--paper),var(--ink) 5%); }
+  </style>
+</head>
+<body>
+<main>
+  <p class="meta">Living audit report · Last audited 2026-07-26</p>
+  <h1>PokerClubCluj</h1>
+  <p>Focused production-dependency security audit of commit <code>7212016</code>, remediated by <code>f9538a6</code>.</p>
+
+  <h2>Severity scorecard</h2>
+  <table class="scorecard">
+    <thead><tr><th>Severity</th><th>Fixed</th><th>Total</th></tr></thead>
+    <tbody>
+      <tr><td>Critical</td><td>0</td><td>0</td></tr>
+      <tr><td>High</td><td>2</td><td>2</td></tr>
+      <tr><td>Medium</td><td>0</td><td>0</td></tr>
+      <tr><td>Low</td><td>0</td><td>0</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Findings register</h2>
+  <table class="register">
+    <thead><tr><th>ID</th><th>Severity</th><th>Status</th><th>Finding</th></tr></thead>
+    <tbody>
+      <tr><td>PC-001</td><td>High</td><td><span class="chip fixed">Fixed</span></td><td>Next.js 14.2.35 exposed production routes to published denial-of-service and server-side request forgery advisories.</td></tr>
+      <tr><td>PC-002</td><td>High</td><td><span class="chip fixed">Fixed</span></td><td>Vulnerable PostCSS and Sharp transitive versions enabled source-map file disclosure and image-processing vulnerabilities.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Finding details</h2>
+  <h3>PC-001 · Framework advisories</h3>
+  <p><strong>Evidence:</strong> <code>package.json</code> pinned Next.js 14.2.35, and <code>npm audit --omit=dev</code> reported high-severity advisories affecting that release.</p>
+  <p><strong>Resolution:</strong> <span class="chip fixed">Fixed</span> Next.js and its matching ESLint configuration were upgraded to 15.5.22 in <code>f9538a6</code>.</p>
+
+  <h3>PC-002 · Vulnerable transitive processors</h3>
+  <p><strong>Evidence:</strong> the original lockfile resolved PostCSS 8.4.31 under Next.js; audit also identified vulnerable Sharp/libvips releases.</p>
+  <p><strong>Resolution:</strong> <span class="chip fixed">Fixed</span> the dependency graph now resolves PostCSS 8.5.23 and Sharp 0.35.3. Node 20.9 or newer is required by the patched image processor.</p>
+
+  <h2>Verification gate</h2>
+  <pre>npm audit --omit=dev
+found 0 vulnerabilities
+
+npx tsc --noEmit
+exit 0
+
+npm run build
+✓ Compiled successfully
+✓ Generating static pages (7/7)</pre>
+
+  <h2>Deploy checklist</h2>
+  <ul>
+    <li><span class="chip fixed">Ready</span> Production dependency audit is clean.</li>
+    <li><span class="chip fixed">Ready</span> TypeScript and production compilation pass.</li>
+    <li><span class="chip open">Pending</span> Merge through pull request checks.</li>
+    <li><span class="chip open">Pending</span> Verify the Vercel deployment and one Supabase petition round-trip after merge.</li>
+  </ul>
+</main>
+</body>
+</html>
