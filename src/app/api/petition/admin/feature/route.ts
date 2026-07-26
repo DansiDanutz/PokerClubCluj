@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { readJsonObject } from "../../request-body.mjs";
 
 const SUPABASE_URL =
   process.env.SUPABASE_URL ?? "https://pewwxyyxcepvluowvaxh.supabase.co";
@@ -10,12 +11,16 @@ export const dynamic = "force-dynamic";
 
 // Fixeaza/defixeaza un mesaj ca "mesaj al organizatorului" (apare sus, marcat transparent).
 export async function POST(req: NextRequest) {
-  let body: { email?: string; password?: string; id?: string; featured?: boolean };
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Cerere invalida." }, { status: 400 });
+  const parsed = await readJsonObject<{
+    email?: string;
+    password?: string;
+    id?: string;
+    featured?: boolean;
+  }>(req);
+  if (parsed.ok === false) {
+    return NextResponse.json({ error: parsed.error }, { status: parsed.status });
   }
+  const body = parsed.value;
 
   const email = (body.email ?? "").trim();
   const password = (body.password ?? "").trim();

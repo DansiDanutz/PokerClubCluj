@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { readJsonObject } from "./request-body.mjs";
 
 // Cheia "anon" este publica prin design (protectia reala este RLS in Supabase);
 // env vars permit suprascrierea fara redeploy de cod.
@@ -45,18 +46,18 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let body: {
+  type PetitionBody = {
     fullName?: string;
     email?: string;
     city?: string;
     comment?: string;
     website?: string;
   };
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Cerere invalida." }, { status: 400 });
+  const parsed = await readJsonObject<PetitionBody>(req);
+  if (parsed.ok === false) {
+    return NextResponse.json({ error: parsed.error }, { status: parsed.status });
   }
+  const body = parsed.value;
 
   // Honeypot: real users never fill this hidden field.
   if (body.website) {

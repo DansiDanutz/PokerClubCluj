@@ -25,7 +25,7 @@
 </head>
 <body>
 <main>
-  <p class="meta">Living audit report · Last audited 2026-07-26</p>
+  <p class="meta">Living audit report · Last audited 2026-07-27</p>
   <h1>PokerClubCluj</h1>
   <p>Focused production-dependency security audit of commit <code>7212016</code>, remediated by <code>f9538a6</code>.</p>
 
@@ -35,7 +35,7 @@
     <tbody>
       <tr><td>Critical</td><td>0</td><td>0</td></tr>
       <tr><td>High</td><td>2</td><td>2</td></tr>
-      <tr><td>Medium</td><td>0</td><td>0</td></tr>
+      <tr><td>Medium</td><td>1</td><td>1</td></tr>
       <tr><td>Low</td><td>0</td><td>0</td></tr>
     </tbody>
   </table>
@@ -46,6 +46,7 @@
     <tbody>
       <tr><td>PC-001</td><td>High</td><td><span class="chip fixed">Fixed</span></td><td>Next.js 14.2.35 exposed production routes to published denial-of-service and server-side request forgery advisories.</td></tr>
       <tr><td>PC-002</td><td>High</td><td><span class="chip fixed">Fixed</span></td><td>Vulnerable PostCSS and Sharp transitive versions enabled source-map file disclosure and image-processing vulnerabilities.</td></tr>
+      <tr><td>PC-003</td><td>Medium</td><td><span class="chip fixed">Fixed</span></td><td>Petition API routes parsed unbounded request bodies and assumed every JSON value was an object.</td></tr>
     </tbody>
   </table>
 
@@ -58,6 +59,10 @@
   <p><strong>Evidence:</strong> the original lockfile resolved PostCSS 8.4.31 under Next.js; audit also identified vulnerable Sharp/libvips releases.</p>
   <p><strong>Resolution:</strong> <span class="chip fixed">Fixed</span> the dependency graph now resolves PostCSS 8.5.23 and Sharp 0.35.3. Node 20.9 or newer is required by the patched image processor.</p>
 
+  <h3>PC-003 · Unbounded petition request bodies</h3>
+  <p><strong>Evidence:</strong> all eight petition POST routes called <code>req.json()</code> directly, without checking content type, decoded shape, declared size, or streamed size.</p>
+  <p><strong>Resolution:</strong> <span class="chip fixed">Fixed</span> a shared reader now accepts JSON objects up to 16 KiB and returns controlled 400, 413, or 415 errors before route logic and Supabase calls. The regression suite covers all eight routes.</p>
+
   <h2>Verification gate</h2>
   <pre>npm audit --omit=dev
 found 0 vulnerabilities
@@ -67,14 +72,18 @@ exit 0
 
 npm run build
 ✓ Compiled successfully
-✓ Generating static pages (7/7)</pre>
+✓ Generating static pages (7/7)
+
+npm test
+9 tests passed</pre>
 
   <h2>Deploy checklist</h2>
   <ul>
     <li><span class="chip fixed">Ready</span> Production dependency audit is clean.</li>
     <li><span class="chip fixed">Ready</span> TypeScript and production compilation pass.</li>
-    <li><span class="chip open">Pending</span> Merge through pull request checks.</li>
-    <li><span class="chip open">Pending</span> Verify the Vercel deployment and one Supabase petition round-trip after merge.</li>
+    <li><span class="chip fixed">Ready</span> Pull request #37 merged as <code>e063b17</code>.</li>
+    <li><span class="chip fixed">Ready</span> Exact-main production deployment 5613796651 succeeded and the public alias returns HTTP 200.</li>
+    <li><span class="chip open">Pending</span> Verify a real Supabase petition round-trip with operator approval after the request-boundary change is deployed.</li>
   </ul>
 </main>
 </body>
