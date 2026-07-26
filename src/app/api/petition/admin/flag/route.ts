@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { readJsonObject } from "../../request-body.mjs";
 
 const SUPABASE_URL =
   process.env.SUPABASE_URL ?? "https://pewwxyyxcepvluowvaxh.supabase.co";
@@ -10,18 +11,18 @@ export const dynamic = "force-dynamic";
 
 // action: "flag" (toggle review flag) | "restore" (show + unflag + unblock IP)
 export async function POST(req: NextRequest) {
-  let body: {
+  type FlagBody = {
     email?: string;
     password?: string;
     id?: string;
     action?: "flag" | "restore";
     flagged?: boolean;
   };
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Cerere invalida." }, { status: 400 });
+  const parsed = await readJsonObject<FlagBody>(req);
+  if (parsed.ok === false) {
+    return NextResponse.json({ error: parsed.error }, { status: parsed.status });
   }
+  const body = parsed.value;
 
   const email = (body.email ?? "").trim();
   const password = (body.password ?? "").trim();

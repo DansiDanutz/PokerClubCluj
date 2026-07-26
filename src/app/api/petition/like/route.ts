@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { readJsonObject } from "../request-body.mjs";
 
 const SUPABASE_URL =
   process.env.SUPABASE_URL ?? "https://pewwxyyxcepvluowvaxh.supabase.co";
@@ -9,12 +10,11 @@ const SUPABASE_ANON_KEY =
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
-  let body: { id?: string };
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Cerere invalida." }, { status: 400 });
+  const parsed = await readJsonObject<{ id?: string }>(req);
+  if (parsed.ok === false) {
+    return NextResponse.json({ error: parsed.error }, { status: parsed.status });
   }
+  const body = parsed.value;
 
   const id = (body.id ?? "").trim();
   if (!/^[0-9a-f-]{36}$/i.test(id)) {
