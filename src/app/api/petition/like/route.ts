@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { readJsonObject } from "../request-body.mjs";
-
-const SUPABASE_URL =
-  process.env.SUPABASE_URL ?? "https://pewwxyyxcepvluowvaxh.supabase.co";
-const SUPABASE_ANON_KEY =
-  process.env.SUPABASE_ANON_KEY ??
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld3d4eXl4Y2Vwdmx1b3d2YXhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxOTA2MjgsImV4cCI6MjA3Mjc2NjYyOH0.nVln959hYDI4mDhdR_4K2FQ_vX9gtiSJMe4yiiqU0qs";
+import { getSupabaseConfig, supabaseHeaders } from "../supabase-config.mjs";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
+  const config = getSupabaseConfig();
+  if (!config) {
+    return NextResponse.json({ error: "Serviciul nu este configurat." }, { status: 503 });
+  }
   const parsed = await readJsonObject<{ id?: string }>(req);
   if (parsed.ok === false) {
     return NextResponse.json({ error: parsed.error }, { status: parsed.status });
@@ -22,19 +21,32 @@ export async function POST(req: NextRequest) {
   }
 
   const ip =
-    (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() ||
+    (
+      req.headers.get("x-vercel-forwarded-for") ??
+      req.headers.get("x-forwarded-for") ??
+      ""
+    )
+      .split(",")[0]
+      .trim()
+      .slice(0, 64) ||
     "unknown";
 
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/petition_like`, {
-    method: "POST",
-    headers: {
-      apikey: SUPABASE_ANON_KEY,
-      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ p_id: id, p_ip: ip }),
-    cache: "no-store",
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${config.url}/rest/v1/rpc/petition_like`, {
+      method: "POST",
+      headers: supabaseHeaders(config),
+      body: JSON.stringify({
+        p_id: id,
+        p_ip: ip,
+        p_api_secret: config.apiSecret,
+      }),
+      cache: "no-store",
+      signal: AbortSignal.timeout(10_000),
+    });
+  } catch {
+    return NextResponse.json({ error: "Serviciul nu raspunde." }, { status: 502 });
+  }
 
   if (!res.ok) {
     return NextResponse.json({ error: "Eroare." }, { status: 500 });

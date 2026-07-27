@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import "./admin.css";
+import { escapeCsvCell } from "../csv.mjs";
 
 type Row = {
   id: string;
@@ -80,6 +81,7 @@ export default function AdminPage() {
         return;
       }
       setRows(data.rows ?? []);
+      setPassword("");
     } catch {
       setError("Eroare de retea.");
     } finally {
@@ -90,11 +92,7 @@ export default function AdminPage() {
   const refresh = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/petition/admin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await fetch("/api/petition/admin", { method: "PUT" });
       const data = await res.json();
       if (res.ok) setRows(data.rows ?? []);
     } finally {
@@ -103,6 +101,7 @@ export default function AdminPage() {
   };
 
   const logout = () => {
+    void fetch("/api/petition/admin", { method: "DELETE" });
     setRows(null);
     setPassword("");
     setQuery("");
@@ -111,9 +110,7 @@ export default function AdminPage() {
 
   const exportCsv = () => {
     const cols = ["Nr.", "Nume", "Email", "Localitate", "Data", "Mesaj", "Like-uri"];
-    const esc = (v: string | number | null) =>
-      `"${String(v ?? "").replace(/"/g, '""')}"`;
-    const lines = [cols.map(esc).join(",")];
+    const lines = [cols.map(escapeCsvCell).join(",")];
     filtered.forEach((r, i) => {
       lines.push(
         [
@@ -125,7 +122,7 @@ export default function AdminPage() {
           r.comment ?? "",
           r.likes ?? 0,
         ]
-          .map(esc)
+          .map(escapeCsvCell)
           .join(",")
       );
     });
@@ -153,7 +150,7 @@ export default function AdminPage() {
       const res = await fetch("/api/petition/admin/hide", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, id, visible: makeVisible }),
+        body: JSON.stringify({ id, visible: makeVisible }),
       });
       if (res.status === 401) return sessionExpired();
       if (!res.ok) {
@@ -177,7 +174,7 @@ export default function AdminPage() {
       const res = await fetch("/api/petition/admin/flag", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, id, action: "restore" }),
+        body: JSON.stringify({ id, action: "restore" }),
       });
       if (res.status === 401) return sessionExpired();
       if (!res.ok) {
@@ -203,7 +200,7 @@ export default function AdminPage() {
       const res = await fetch("/api/petition/admin/block", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, id, blocked: makeBlocked }),
+        body: JSON.stringify({ id, blocked: makeBlocked }),
       });
       if (res.status === 401) return sessionExpired();
       if (!res.ok) {
@@ -229,7 +226,7 @@ export default function AdminPage() {
       const res = await fetch("/api/petition/admin/feature", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, id, featured: makeFeatured }),
+        body: JSON.stringify({ id, featured: makeFeatured }),
       });
       if (res.status === 401) return sessionExpired();
       if (!res.ok) {
@@ -252,8 +249,6 @@ export default function AdminPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email,
-          password,
           id,
           action: "flag",
           flagged: makeFlagged,
@@ -286,7 +281,7 @@ export default function AdminPage() {
       const res = await fetch("/api/petition/admin/delete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, id }),
+        body: JSON.stringify({ id }),
       });
       if (res.status === 401) return sessionExpired();
       if (!res.ok) {
