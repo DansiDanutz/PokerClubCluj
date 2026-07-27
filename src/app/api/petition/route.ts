@@ -1,32 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
+import { classifyPetitionInsert } from "./petition-insert.mjs";
+import { validatePetitionBody } from "./petition-input.mjs";
 import { readJsonObject } from "./request-body.mjs";
-
-// Cheia "anon" este publica prin design (protectia reala este RLS in Supabase);
-// env vars permit suprascrierea fara redeploy de cod.
-const SUPABASE_URL =
-  process.env.SUPABASE_URL ?? "https://pewwxyyxcepvluowvaxh.supabase.co";
-const SUPABASE_ANON_KEY =
-  process.env.SUPABASE_ANON_KEY ??
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld3d4eXl4Y2Vwdmx1b3d2YXhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxOTA2MjgsImV4cCI6MjA3Mjc2NjYyOH0.nVln959hYDI4mDhdR_4K2FQ_vX9gtiSJMe4yiiqU0qs";
-
-const baseHeaders = {
-  apikey: SUPABASE_ANON_KEY,
-  Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-  "Content-Type": "application/json",
-};
+import { getSupabaseConfig, supabaseHeaders } from "./supabase-config.mjs";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  const config = getSupabaseConfig();
+  if (!config) {
     return NextResponse.json({ count: 0, recent: [] });
   }
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/petition_stats`, {
+    const res = await fetch(`${config.url}/rest/v1/rpc/petition_stats`, {
       method: "POST",
-      headers: baseHeaders,
-      body: "{}",
+      headers: supabaseHeaders(config),
+      body: JSON.stringify({ p_api_secret: config.apiSecret }),
       cache: "no-store",
+      signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) {
       return NextResponse.json({ count: 0, recent: [] });
@@ -39,7 +30,8 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  const config = getSupabaseConfig();
+  if (!config) {
     return NextResponse.json(
       { error: "Colectarea semnaturilor nu este inca activata." },
       { status: 503 }
@@ -64,44 +56,41 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  const fullName = (body.fullName ?? "").trim();
-  const email = (body.email ?? "").trim().toLowerCase();
-  const city = (body.city ?? "").trim();
-  const comment = (body.comment ?? "").trim();
-
-  if (fullName.length < 3 || fullName.length > 120) {
-    return NextResponse.json(
-      { error: "Va rugam introduceti numele complet." },
-      { status: 400 }
-    );
+  const validated = validatePetitionBody(body);
+  if (validated.ok === false) {
+    return NextResponse.json({ error: validated.error }, { status: 400 });
   }
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || email.length > 254) {
-    return NextResponse.json(
-      { error: "Adresa de email nu este valida." },
-      { status: 400 }
-    );
-  }
+  const { fullName, email, city, comment } = validated.value;
 
   // Retinute pentru prevenirea si investigarea abuzurilor (nu sunt publice).
   const ip =
-    (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || null;
+    (
+      req.headers.get("x-vercel-forwarded-for") ??
+      req.headers.get("x-forwarded-for") ??
+      ""
+    )
+      .split(",")[0]
+      .trim()
+      .slice(0, 64) || null;
   const userAgent = req.headers.get("user-agent")?.slice(0, 300) ?? null;
   const lang = req.headers.get("accept-language")?.slice(0, 120) ?? null;
 
   let res: Response;
   try {
-    res = await fetch(`${SUPABASE_URL}/rest/v1/petition_signatures`, {
+    res = await fetch(`${config.url}/rest/v1/rpc/petition_submit`, {
       method: "POST",
-      headers: { ...baseHeaders, Prefer: "return=minimal" },
+      headers: supabaseHeaders(config),
       body: JSON.stringify({
-        full_name: fullName,
-        email,
-        city: city || null,
-        comment: comment || null,
-        ip,
-        user_agent: userAgent,
-        lang,
+        p_full_name: fullName,
+        p_email: email,
+        p_city: city || null,
+        p_comment: comment || null,
+        p_ip: ip,
+        p_user_agent: userAgent,
+        p_lang: lang,
+        p_api_secret: config.apiSecret,
       }),
+      signal: AbortSignal.timeout(10_000),
     });
   } catch {
     return NextResponse.json(
@@ -110,18 +99,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (res.status === 409) {
-    return NextResponse.json(
-      { error: "Aceasta adresa de email a semnat deja. Multumim!" },
-      { status: 409 }
-    );
-  }
-  if (!res.ok) {
-    return NextResponse.json(
-      { error: "A aparut o eroare. Va rugam incercati din nou." },
-      { status: 500 }
-    );
-  }
-
-  return NextResponse.json({ ok: true }, { status: 201 });
+  const result = classifyPetitionInsert(res.status);
+  return NextResponse.json(result.body, { status: result.status });
 }

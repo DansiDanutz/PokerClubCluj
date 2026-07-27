@@ -4,7 +4,7 @@ export const metadata = {
   metadataBase: new URL("https://poker-club-cluj.vercel.app"),
   title: "Propunere pentru Consiliul Local Cluj-Napoca",
   description:
-    "Versiune rafinata a paginii Poker Cluj, optimizata pentru mobil, tableta si desktop.",
+    "Memoriu public pentru reglementarea distincta a pokerului intre participanti in Cluj-Napoca.",
   openGraph: {
     title: "Propunere pentru Consiliul Local Cluj-Napoca",
     description:

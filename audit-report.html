@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PokerClubCluj security audit — 2026-07-26</title>
+  <title>PokerClubCluj Wave 1 audit — 2026-07-27</title>
   <style>
     :root { color-scheme: light dark; --paper:#f6f0e3; --ink:#241f18; --line:#a99b83; --fixed:#177245; --open:#a35b00; }
     @media (prefers-color-scheme: dark) { :root { --paper:#191713; --ink:#eee5d4; --line:#655d50; --fixed:#63d69c; --open:#f4b45f; } }
     * { box-sizing:border-box; }
     body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 Georgia,serif; }
-    main { width:min(920px,calc(100% - 32px)); margin:48px auto; }
+    main { width:min(980px,calc(100% - 32px)); margin:48px auto; }
     h1,h2 { line-height:1.15; }
     h1 { font-size:clamp(2rem,6vw,4rem); margin-bottom:.25rem; }
     h2 { border-bottom:1px solid var(--line); padding-bottom:.35rem; margin-top:2.5rem; }
-    .meta { color:var(--ink); opacity:.72; }
-    .scorecard,.register { width:100%; border-collapse:collapse; }
+    .meta { opacity:.72; }
+    table { width:100%; border-collapse:collapse; }
     th,td { padding:.7rem; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
     .chip { display:inline-block; padding:.12rem .55rem; border:1px solid currentColor; border-radius:999px; font:700 .76rem/1.4 system-ui,sans-serif; text-transform:uppercase; letter-spacing:.04em; }
     .fixed { color:var(--fixed); }
@@ -25,66 +25,74 @@
 </head>
 <body>
 <main>
-  <p class="meta">Living audit report · Last audited 2026-07-27</p>
+  <p class="meta">Living Wave 1 audit · Last updated 2026-07-27 · Tracking issue #40</p>
   <h1>PokerClubCluj</h1>
-  <p>Focused production-dependency security audit of commit <code>7212016</code>, remediated by <code>f9538a6</code>.</p>
+  <p>Risk-prioritized audit of application source, petition privacy, administrative authorization, Supabase access control, dependencies, CI, GitHub controls, Vercel configuration, and production lineage. Source baseline: <code>b95720e0e5bba3d2177e409912bc8a9cba2b953a</code>.</p>
+
+  <h2>Current verdict</h2>
+  <p><span class="chip open">No-go</span> <strong>documented_pending_validation</strong>. Application and provider remediations are prepared, but production is not releasable until the exact reviewed commit is deployed successfully and the Phase B Supabase enforcement migration is applied and verified.</p>
 
   <h2>Severity scorecard</h2>
-  <table class="scorecard">
-    <thead><tr><th>Severity</th><th>Fixed</th><th>Total</th></tr></thead>
+  <table>
+    <thead><tr><th>Severity</th><th>Remediated in branch/provider</th><th>Pending enforcement</th><th>Total</th></tr></thead>
     <tbody>
-      <tr><td>Critical</td><td>0</td><td>0</td></tr>
-      <tr><td>High</td><td>2</td><td>2</td></tr>
-      <tr><td>Medium</td><td>1</td><td>1</td></tr>
-      <tr><td>Low</td><td>0</td><td>0</td></tr>
+      <tr><td>Critical</td><td>0</td><td>0</td><td>0</td></tr>
+      <tr><td>High</td><td>4</td><td>1</td><td>5</td></tr>
+      <tr><td>Medium</td><td>6</td><td>0</td><td>6</td></tr>
+      <tr><td>Low</td><td>2</td><td>0</td><td>2</td></tr>
     </tbody>
   </table>
 
   <h2>Findings register</h2>
-  <table class="register">
-    <thead><tr><th>ID</th><th>Severity</th><th>Status</th><th>Finding</th></tr></thead>
+  <table>
+    <thead><tr><th>ID</th><th>Severity</th><th>Status</th><th>Finding and disposition</th></tr></thead>
     <tbody>
-      <tr><td>PC-001</td><td>High</td><td><span class="chip fixed">Fixed</span></td><td>Next.js 14.2.35 exposed production routes to published denial-of-service and server-side request forgery advisories.</td></tr>
-      <tr><td>PC-002</td><td>High</td><td><span class="chip fixed">Fixed</span></td><td>Vulnerable PostCSS and Sharp transitive versions enabled source-map file disclosure and image-processing vulnerabilities.</td></tr>
-      <tr><td>PC-003</td><td>Medium</td><td><span class="chip fixed">Fixed</span></td><td>Petition API routes parsed unbounded request bodies and assumed every JSON value was an object.</td></tr>
+      <tr><td>PC-W1-001</td><td>High</td><td><span class="chip fixed">Prepared</span></td><td>Raw admin credentials were sent on every mutation. The branch replaces this with a two-hour encrypted, HttpOnly, SameSite=Strict session and exact-origin checks.</td></tr>
+      <tr><td>PC-W1-002</td><td>High</td><td><span class="chip open">Pending</span></td><td>The anon key could reach petition data and legacy RPCs directly. Phase A secret-gated RPC overloads are live; Phase B revocation is deliberately gated on the new production deployment.</td></tr>
+      <tr><td>PC-W1-003</td><td>High</td><td><span class="chip fixed">Prepared</span></td><td>The operator password was stored as plaintext. Phase B converts it to a verified bcrypt hash atomically without exposing the credential.</td></tr>
+      <tr><td>PC-W1-004</td><td>High</td><td><span class="chip fixed">Provider</span></td><td>No abuse throttling protected petition or admin endpoints. Four Vercel Firewall IP rate limits now cover signature, like, login, and mutation paths.</td></tr>
+      <tr><td>PC-W1-005</td><td>High</td><td><span class="chip fixed">Prepared</span></td><td>Development dependencies contained nine high-severity advisories. Unused UI/lint packages were removed and the full dependency graph now reports zero vulnerabilities.</td></tr>
+      <tr><td>PC-W1-006</td><td>Medium</td><td><span class="chip fixed">Prepared</span></td><td>Duplicate-email responses disclosed supporter membership. New and duplicate submissions now return the same success response.</td></tr>
+      <tr><td>PC-W1-007</td><td>Medium</td><td><span class="chip fixed">Prepared</span></td><td>Public petition fields lacked complete server-side bounds. Application and RPC validation now enforce length and format limits.</td></tr>
+      <tr><td>PC-W1-008</td><td>Medium</td><td><span class="chip fixed">Prepared</span></td><td>CSV export allowed spreadsheet formulas. Export cells now neutralize dangerous prefixes.</td></tr>
+      <tr><td>PC-W1-009</td><td>Medium</td><td><span class="chip fixed">Prepared</span></td><td>Supabase URL and anon JWT fallbacks were embedded in source. Runtime configuration now fails closed and all <code>.env*</code> files are ignored.</td></tr>
+      <tr><td>PC-W1-010</td><td>Medium</td><td><span class="chip fixed">Provider</span></td><td>GitHub lacked modern supply-chain controls. SHA pinning, secret scanning, push protection, and Dependabot security updates are enabled.</td></tr>
+      <tr><td>PC-W1-011</td><td>Medium</td><td><span class="chip fixed">Prepared</span></td><td>Security headers were absent. CSP, HSTS, anti-framing, MIME, referrer, opener, and permissions policies are configured.</td></tr>
+      <tr><td>PC-W1-012</td><td>Low</td><td><span class="chip fixed">Prepared</span></td><td>CI had no repository verification workflow. Pinned verify and CodeQL workflows now gate dependency audit, tests, types, build, and code scanning.</td></tr>
+      <tr><td>PC-W1-013</td><td>Low</td><td><span class="chip fixed">Prepared</span></td><td>Repository documentation described a reconstruction rather than the current application. README now documents runtime, security boundaries, configuration, and release gates.</td></tr>
     </tbody>
   </table>
 
-  <h2>Finding details</h2>
-  <h3>PC-001 · Framework advisories</h3>
-  <p><strong>Evidence:</strong> <code>package.json</code> pinned Next.js 14.2.35, and <code>npm audit --omit=dev</code> reported high-severity advisories affecting that release.</p>
-  <p><strong>Resolution:</strong> <span class="chip fixed">Fixed</span> Next.js and its matching ESLint configuration were upgraded to 15.5.22 in <code>f9538a6</code>.</p>
+  <h2>Provider evidence</h2>
+  <ul>
+    <li>Vercel project <code>irises-projects-ce549f63/poker-club-cluj</code> has scoped Supabase, admin-session, and petition API variables for the required environments; values were never printed or committed.</li>
+    <li>Active Vercel Firewall rules: <code>rule_petition_admin_login_limit_Cbkdkc</code>, <code>rule_petition_admin_mutation_limit_TdEISg</code>, <code>rule_petition_like_limit_cnsOb1</code>, and <code>rule_petition_signature_limit_25BTnf</code>.</li>
+    <li>Supabase project <code>pewwxyyxcepvluowvaxh</code> is active. Phase A migration <code>20260727080101_harden_petition_api_boundary.sql</code> is applied and its new overload/grant boundary was inspected.</li>
+    <li>Phase B migration <code>20260727080140_enforce_petition_api_boundary.sql</code> remains unapplied until the application cutover proves the secret-gated calls.</li>
+  </ul>
 
-  <h3>PC-002 · Vulnerable transitive processors</h3>
-  <p><strong>Evidence:</strong> the original lockfile resolved PostCSS 8.4.31 under Next.js; audit also identified vulnerable Sharp/libvips releases.</p>
-  <p><strong>Resolution:</strong> <span class="chip fixed">Fixed</span> the dependency graph now resolves PostCSS 8.5.23 and Sharp 0.35.3. Node 20.9 or newer is required by the patched image processor.</p>
-
-  <h3>PC-003 · Unbounded petition request bodies</h3>
-  <p><strong>Evidence:</strong> all eight petition POST routes called <code>req.json()</code> directly, without checking content type, decoded shape, declared size, or streamed size.</p>
-  <p><strong>Resolution:</strong> <span class="chip fixed">Fixed</span> a shared reader now accepts JSON objects up to 16 KiB and returns controlled 400, 413, or 415 errors before route logic and Supabase calls. The regression suite covers all eight routes.</p>
-
-  <h2>Verification gate</h2>
-  <pre>npm audit --omit=dev
+  <h2>Local verification</h2>
+  <pre>npm audit --audit-level=high
 found 0 vulnerabilities
 
-npx tsc --noEmit
+npm test
+24 tests passed
+
+npm run typecheck
 exit 0
 
 npm run build
 ✓ Compiled successfully
-✓ Generating static pages (7/7)
+✓ Generating static pages (7/7)</pre>
 
-npm test
-9 tests passed</pre>
-
-  <h2>Deploy checklist</h2>
-  <ul>
-    <li><span class="chip fixed">Ready</span> Production dependency audit is clean.</li>
-    <li><span class="chip fixed">Ready</span> TypeScript and production compilation pass.</li>
-    <li><span class="chip fixed">Ready</span> Pull request #37 merged as <code>e063b17</code>.</li>
-    <li><span class="chip fixed">Ready</span> Exact-main production deployment 5613796651 succeeded and the public alias returns HTTP 200.</li>
-    <li><span class="chip open">Pending</span> Verify a real Supabase petition round-trip with operator approval after the request-boundary change is deployed.</li>
-  </ul>
+  <h2>Release gate</h2>
+  <ol>
+    <li>Open the issue-linked PR and require exact-head verify, CodeQL, Greptile, Codex, and Vercel evidence.</li>
+    <li>Verify the preview read-only petition statistics path and response security headers without creating or changing petition data.</li>
+    <li>Merge only the reviewed exact head and verify its production Vercel deployment and public GET routes.</li>
+    <li>Apply Phase B, rerun Supabase security advisors, prove legacy anon entry points and table privileges are gone, and recheck production reads.</li>
+    <li>Enable branch protection with the observed stable check names, then record exact merge/deployment evidence in RepoAudit.</li>
+  </ol>
 </main>
 </body>
 </html>
