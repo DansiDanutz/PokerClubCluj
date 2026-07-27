@@ -30,14 +30,14 @@
   <p>Risk-prioritized audit of application source, petition privacy, administrative authorization, Supabase access control, dependencies, CI, GitHub controls, Vercel configuration, and production lineage. Source baseline: <code>b95720e0e5bba3d2177e409912bc8a9cba2b953a</code>.</p>
 
   <h2>Current verdict</h2>
-  <p><span class="chip open">No-go</span> <strong>documented_pending_validation</strong>. Application and provider remediations are prepared, but production is not releasable until the exact reviewed commit is deployed successfully and the Phase B Supabase enforcement migration is applied and verified.</p>
+  <p><span class="chip fixed">Go</span> <strong>complete_with_documented_exceptions</strong>. The exact reviewed source is live, the Phase B database boundary is enforced, production read paths are healthy, and repository governance is active.</p>
 
   <h2>Severity scorecard</h2>
   <table>
-    <thead><tr><th>Severity</th><th>Remediated in branch/provider</th><th>Pending enforcement</th><th>Total</th></tr></thead>
+    <thead><tr><th>Severity</th><th>Remediated</th><th>Open</th><th>Total</th></tr></thead>
     <tbody>
       <tr><td>Critical</td><td>0</td><td>0</td><td>0</td></tr>
-      <tr><td>High</td><td>4</td><td>1</td><td>5</td></tr>
+      <tr><td>High</td><td>5</td><td>0</td><td>5</td></tr>
       <tr><td>Medium</td><td>6</td><td>0</td><td>6</td></tr>
       <tr><td>Low</td><td>2</td><td>0</td><td>2</td></tr>
     </tbody>
@@ -47,19 +47,19 @@
   <table>
     <thead><tr><th>ID</th><th>Severity</th><th>Status</th><th>Finding and disposition</th></tr></thead>
     <tbody>
-      <tr><td>PC-W1-001</td><td>High</td><td><span class="chip fixed">Prepared</span></td><td>Raw admin credentials were sent on every mutation. The branch replaces this with a two-hour encrypted, HttpOnly, SameSite=Strict session and exact-origin checks.</td></tr>
-      <tr><td>PC-W1-002</td><td>High</td><td><span class="chip open">Pending</span></td><td>The anon key could reach petition data and legacy RPCs directly. Phase A secret-gated RPC overloads are live; Phase B revocation is deliberately gated on the new production deployment.</td></tr>
-      <tr><td>PC-W1-003</td><td>High</td><td><span class="chip fixed">Prepared</span></td><td>The operator password was stored as plaintext. Phase B converts it to a verified bcrypt hash atomically without exposing the credential.</td></tr>
+      <tr><td>PC-W1-001</td><td>High</td><td><span class="chip fixed">Fixed</span></td><td>Raw admin credentials were sent on every mutation. Production now uses a two-hour encrypted, HttpOnly, SameSite=Strict session and exact-origin checks.</td></tr>
+      <tr><td>PC-W1-002</td><td>High</td><td><span class="chip fixed">Fixed</span></td><td>The anon key could reach petition data and legacy RPCs directly. Phase B removed anonymous table privileges and legacy RPC execution; only secret-gated overloads remain.</td></tr>
+      <tr><td>PC-W1-003</td><td>High</td><td><span class="chip fixed">Fixed</span></td><td>The operator password was stored as plaintext. Phase B converted it to a verified bcrypt hash atomically without exposing the credential.</td></tr>
       <tr><td>PC-W1-004</td><td>High</td><td><span class="chip fixed">Provider</span></td><td>No abuse throttling protected petition or admin endpoints. Four Vercel Firewall IP rate limits now cover signature, like, login, and mutation paths.</td></tr>
-      <tr><td>PC-W1-005</td><td>High</td><td><span class="chip fixed">Prepared</span></td><td>Development dependencies contained nine high-severity advisories. Unused UI/lint packages were removed and the full dependency graph now reports zero vulnerabilities.</td></tr>
-      <tr><td>PC-W1-006</td><td>Medium</td><td><span class="chip fixed">Prepared</span></td><td>Duplicate-email responses disclosed supporter membership. New and duplicate submissions now return the same success response.</td></tr>
-      <tr><td>PC-W1-007</td><td>Medium</td><td><span class="chip fixed">Prepared</span></td><td>Public petition fields lacked complete server-side bounds. Application and RPC validation now enforce length and format limits.</td></tr>
-      <tr><td>PC-W1-008</td><td>Medium</td><td><span class="chip fixed">Prepared</span></td><td>CSV export allowed spreadsheet formulas. Export cells now neutralize dangerous prefixes.</td></tr>
-      <tr><td>PC-W1-009</td><td>Medium</td><td><span class="chip fixed">Prepared</span></td><td>Supabase URL and anon JWT fallbacks were embedded in source. Runtime configuration now fails closed and all <code>.env*</code> files are ignored.</td></tr>
+      <tr><td>PC-W1-005</td><td>High</td><td><span class="chip fixed">Fixed</span></td><td>Development dependencies contained nine high-severity advisories. Unused UI/lint packages were removed and the full dependency graph now reports zero vulnerabilities.</td></tr>
+      <tr><td>PC-W1-006</td><td>Medium</td><td><span class="chip fixed">Fixed</span></td><td>Duplicate-email responses disclosed supporter membership. New and duplicate submissions now return the same success response.</td></tr>
+      <tr><td>PC-W1-007</td><td>Medium</td><td><span class="chip fixed">Fixed</span></td><td>Public petition fields lacked complete server-side bounds. Application and RPC validation now enforce length and format limits.</td></tr>
+      <tr><td>PC-W1-008</td><td>Medium</td><td><span class="chip fixed">Fixed</span></td><td>CSV export allowed spreadsheet formulas. Export cells now neutralize dangerous prefixes.</td></tr>
+      <tr><td>PC-W1-009</td><td>Medium</td><td><span class="chip fixed">Fixed</span></td><td>Supabase URL and anon JWT fallbacks were embedded in source. Runtime configuration now fails closed and all <code>.env*</code> files are ignored.</td></tr>
       <tr><td>PC-W1-010</td><td>Medium</td><td><span class="chip fixed">Provider</span></td><td>GitHub lacked modern supply-chain controls. SHA pinning, secret scanning, push protection, and Dependabot security updates are enabled.</td></tr>
-      <tr><td>PC-W1-011</td><td>Medium</td><td><span class="chip fixed">Prepared</span></td><td>Security headers were absent. CSP, HSTS, anti-framing, MIME, referrer, opener, and permissions policies are configured.</td></tr>
-      <tr><td>PC-W1-012</td><td>Low</td><td><span class="chip fixed">Prepared</span></td><td>CI had no repository verification workflow. Pinned verify and CodeQL workflows now gate dependency audit, tests, types, build, and code scanning.</td></tr>
-      <tr><td>PC-W1-013</td><td>Low</td><td><span class="chip fixed">Prepared</span></td><td>Repository documentation described a reconstruction rather than the current application. README now documents runtime, security boundaries, configuration, and release gates.</td></tr>
+      <tr><td>PC-W1-011</td><td>Medium</td><td><span class="chip fixed">Fixed</span></td><td>Security headers were absent. CSP, HSTS, anti-framing, MIME, referrer, opener, and permissions policies are configured.</td></tr>
+      <tr><td>PC-W1-012</td><td>Low</td><td><span class="chip fixed">Fixed</span></td><td>CI had no repository verification workflow. Pinned verify and CodeQL workflows now gate dependency audit, tests, types, build, and code scanning.</td></tr>
+      <tr><td>PC-W1-013</td><td>Low</td><td><span class="chip fixed">Fixed</span></td><td>Repository documentation described a reconstruction rather than the current application. README now documents runtime, security boundaries, configuration, and release gates.</td></tr>
     </tbody>
   </table>
 
@@ -67,8 +67,10 @@
   <ul>
     <li>Vercel project <code>irises-projects-ce549f63/poker-club-cluj</code> has scoped Supabase, admin-session, and petition API variables for the required environments; values were never printed or committed.</li>
     <li>Active Vercel Firewall rules: <code>rule_petition_admin_login_limit_Cbkdkc</code>, <code>rule_petition_admin_mutation_limit_TdEISg</code>, <code>rule_petition_like_limit_cnsOb1</code>, and <code>rule_petition_signature_limit_25BTnf</code>.</li>
-    <li>Supabase project <code>pewwxyyxcepvluowvaxh</code> is active. Phase A migration <code>20260727080101_harden_petition_api_boundary.sql</code> is applied and its new overload/grant boundary was inspected.</li>
-    <li>Phase B migration <code>20260727080140_enforce_petition_api_boundary.sql</code> remains unapplied until the application cutover proves the secret-gated calls.</li>
+    <li>Supabase migrations <code>20260727080101</code> and <code>20260727080140</code> are applied and aligned in the remote migration ledger. Targeted metadata checks prove the policy, table privilege, legacy RPC, helper visibility, gated RPC, and bcrypt invariants.</li>
+    <li>PR #41 exact head <code>2f890eb7d1b1c03a9656e7ea1b32af7e5749e681</code> passed verify, CodeQL, Greptile (41 files, zero comments), and Vercel before merge.</li>
+    <li>Merge <code>0f86d56757514ce710452e50812e85946d48d977</code> passed main-branch verify and CodeQL with zero annotations and deployed successfully as Vercel production deployment <code>5619325101</code>.</li>
+    <li><code>main</code> requires strict, app-bound verify, analyze, CodeQL, Greptile Review, and Vercel checks; PRs, resolved conversations, linear history, admin enforcement, and force-push/deletion denial are active.</li>
   </ul>
 
   <h2>Local verification</h2>
@@ -85,14 +87,19 @@ npm run build
 ✓ Compiled successfully
 ✓ Generating static pages (7/7)</pre>
 
-  <h2>Release gate</h2>
-  <ol>
-    <li>Open the issue-linked PR and require exact-head verify, CodeQL, Greptile, Codex, and Vercel evidence.</li>
-    <li>Verify the preview read-only petition statistics path and response security headers without creating or changing petition data.</li>
-    <li>Merge only the reviewed exact head and verify its production Vercel deployment and public GET routes.</li>
-    <li>Apply Phase B, rerun Supabase security advisors, prove legacy anon entry points and table privileges are gone, and recheck production reads.</li>
-    <li>Enable branch protection with the observed stable check names, then record exact merge/deployment evidence in RepoAudit.</li>
-  </ol>
+  <h2>Production verification</h2>
+  <ul>
+    <li><span class="chip fixed">Passed</span> Public <code>/</code>, <code>/memoriu</code>, and secret-gated <code>/api/petition</code> returned HTTP 200 before and after Phase B.</li>
+    <li><span class="chip fixed">Passed</span> CSP, HSTS, anti-framing, MIME, referrer, opener, and permissions headers were observed on the production alias.</li>
+    <li><span class="chip fixed">Passed</span> No signer row, production petition submission, or administrative mutation was used for audit verification.</li>
+  </ul>
+
+  <h2>Documented exceptions</h2>
+  <ul>
+    <li>The Codex GitHub connector could not run because its account review quota was exhausted; this is not represented as a clean review. Exact-head Greptile, CodeQL, CI, local security review, and provider assertions are the compensating evidence.</li>
+    <li>Supabase CLI schema lint requires a database password that was not requested or exposed. Direct metadata assertions and the read-only production endpoint verified the changed boundary.</li>
+    <li>Petition retention duration and operator recovery policy remain owner-governed operational decisions; changing or deleting production signer data was outside this audit's authority.</li>
+  </ul>
 </main>
 </body>
 </html>
