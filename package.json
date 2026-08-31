@@ -12,6 +12,7 @@
     "verify": "npm run audit:ci && npm test && npm run typecheck && npm run build"
   },
   "dependencies": {
+    "@vercel/analytics": "2.0.1",
     "next": "15.5.22",
     "postcss": "8.5.23",
     "react": "18.2.0",
