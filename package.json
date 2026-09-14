@@ -12,7 +12,7 @@
     "verify": "npm run audit:ci && npm test && npm run typecheck && npm run build"
   },
   "dependencies": {
-    "next": "15.5.22",
+    "next": "15.5.25",
     "postcss": "8.5.23",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -25,7 +25,7 @@
   },
   "overrides": {
     "postcss": "$postcss",
-    "sharp": "0.35.3"
+    "sharp": "^0.35.4"
   },
   "engines": {
     "node": ">=20.9.0"
