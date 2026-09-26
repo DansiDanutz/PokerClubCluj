@@ -139,8 +139,10 @@ export default function MemoriuPage() {
             </a>
           </div>
           <p>
-            Memoriul va fi depus oficial la Primăria Municipiului Cluj-Napoca
-            împreună cu lista semnatarilor.
+            Memoriul a fost depus oficial la Primăria Municipiului Cluj-Napoca
+            împreună cu lista semnatarilor de la data depunerii. Semnăturile
+            noi se adaugă listei publice de susținere și pot fi transmise
+            ulterior Consiliului Local.
           </p>
         </div>
       </div>
