@@ -12,7 +12,7 @@ export const metadata = {
   openGraph: {
     title: "Semnează memoriul: pokerul nu e păcănele",
     description:
-      "Consultare publică Cluj-Napoca, 1-15 iulie 2026. Jocurile dintre participanti (loto si cluburile de poker) trebuie tratate distinct de sloturi si cazinouri. Semneaza memoriul catre Consiliul Local.",
+      "Memoriu depus in consultarea publica Cluj-Napoca (1-15 iulie 2026). Jocurile dintre participanti (loto si cluburile de poker) trebuie tratate distinct de sloturi si cazinouri. Semneaza memoriul catre Consiliul Local.",
     url: PAGE_URL,
     siteName: "Player's Poker Club",
     type: "website",
@@ -36,7 +36,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Semnează memoriul: pokerul nu e păcănele",
     description:
-      "Consultare publică Cluj-Napoca, 1-15 iulie 2026. Jocurile dintre participanti (loto si cluburile de poker) trebuie tratate distinct de sloturi si cazinouri.",
+      "Memoriu depus in consultarea publica Cluj-Napoca (1-15 iulie 2026). Jocurile dintre participanti (loto si cluburile de poker) trebuie tratate distinct de sloturi si cazinouri.",
     images: ["/manifest-poster.jpg"],
   },
 };
@@ -65,12 +65,13 @@ export default function MemoriuPage() {
       <div className="memoriu-wrap">
         <div className="memoriu-deadline">
           <div className="memoriu-deadline__label">
-            Termen limită: 15 iulie 2026
+            Memoriul a fost depus — consultarea s-a încheiat pe 15 iulie 2026
           </div>
           <p>
             Consultarea publică asupra proiectului de interzicere a jocurilor de
-            noroc în Cluj-Napoca este deschisă doar până pe 15 iulie. Semnează
-            mai jos pentru ca vocea ta să fie anexată memoriului.
+            noroc în Cluj-Napoca s-a încheiat pe 15 iulie 2026, iar memoriul a
+            fost depus. Semnăturile rămân deschise — fiecare semnătură nouă
+            susține în continuare demersul.
           </p>
         </div>
 
