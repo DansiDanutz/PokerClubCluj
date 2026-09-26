@@ -609,10 +609,10 @@ export default function HomePage() {
             <span className="eyebrow">Propunere oficiala • Martie 2026</span>
             <div className="urgent-callout">
               <div className="urgent-callout__label">
-                Consultare publică — termen 15 iulie 2026
+                Consultare publică încheiată — memoriul a fost depus
               </div>
               <div className="urgent-callout__body">
-                Primăria propune interzicerea tuturor jocurilor de noroc.
+                Primăria a propus interzicerea tuturor jocurilor de noroc.
                 Memoriul nostru cere exceptarea cluburilor de poker — jocuri
                 între participanți, ca Loto.
               </div>
@@ -634,7 +634,7 @@ export default function HomePage() {
             </p>
             <div className="hero__actions">
               <a href="/memoriu" className="button button--primary">
-                ✍ Semnează memoriul — până pe 15 iulie
+                ✍ Semnează memoriul
               </a>
               <a href="#scenariul-b" className="button button--ghost">
                 Vedeti planul de compromis

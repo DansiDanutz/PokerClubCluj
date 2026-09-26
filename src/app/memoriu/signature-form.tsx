@@ -171,8 +171,9 @@ export default function SignatureForm() {
         <div className="sig-success">
           <div className="sig-success__title">Mulțumim pentru susținere! ♠</div>
           <p>
-            Semnătura ta a fost înregistrată și va însoți memoriul depus la
-            Primăria Cluj-Napoca. Acum poți aprecia poveștile celorlalți.
+            Semnătura ta a fost înregistrată în lista publică de susținere a
+            memoriului depus la Primăria Cluj-Napoca. Acum poți aprecia
+            poveștile celorlalți.
           </p>
           <p className="sig-success__share-hint">
             📣 Distribuie povestea ta pe Facebook și adună Like-uri — cele mai
@@ -265,8 +266,10 @@ export default function SignatureForm() {
           </button>
           <p className="sig-consent">
             Prin semnare va exprimati acordul ca numele si adresa de email sa
-            fie incluse in lista de sustinatori anexata memoriului depus la
-            Primaria Municipiului Cluj-Napoca. Emailul nu este afisat public si
+            fie incluse in lista de sustinatori a memoriului depus la Primaria
+            Municipiului Cluj-Napoca; semnaturile adaugate dupa depunere fac
+            parte din lista publica de sustinere si pot fi transmise ulterior
+            Consiliului Local. Emailul nu este afisat public si
             nu este folosit in alte scopuri. Mesajul pentru Consiliul Local
             (daca il completati) apare public pe aceasta pagina, alaturi de
             prenume si initiala numelui. Mesajele nepotrivite pot fi eliminate.

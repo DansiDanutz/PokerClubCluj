@@ -20,11 +20,13 @@ export async function GET() {
       signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) {
+      console.error(`petition_stats failed with HTTP ${res.status}`);
       return NextResponse.json({ count: 0, recent: [] });
     }
     const stats = await res.json();
     return NextResponse.json(stats);
-  } catch {
+  } catch (error) {
+    console.error("petition_stats request error:", error);
     return NextResponse.json({ count: 0, recent: [] });
   }
 }
