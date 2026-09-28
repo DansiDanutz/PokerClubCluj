@@ -52,6 +52,7 @@ export default function MemoriuPage() {
           </a>
           <nav className="topnav" aria-label="Navigare memoriu">
             <a href="/">← Înapoi la propunere</a>
+            <a href="/video">Video</a>
             <a
               href="/memoriu-poker-cluj-iulie-2026.pdf"
               className="topnav-highlight"
