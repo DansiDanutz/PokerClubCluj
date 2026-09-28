@@ -1,4 +1,5 @@
-import { PLAYERS_EVENTS, type PlayersEvent } from "./events";
+import { PLAYERS_EVENTS } from "./events";
+import { sortEventsByDateDesc } from "./order.mjs";
 import "./video.css";
 
 const PAGE_URL = "https://poker-club-cluj.vercel.app/video";
@@ -33,12 +34,8 @@ export const metadata = {
   },
 };
 
-function sortedEvents(): PlayersEvent[] {
-  return [...PLAYERS_EVENTS].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
-}
-
 export default function VideoPage() {
-  const events = sortedEvents();
+  const events = sortEventsByDateDesc(PLAYERS_EVENTS);
   const withVideo = events.filter((e) => e.video).length;
 
   return (
