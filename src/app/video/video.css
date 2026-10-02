@@ -1,0 +1,209 @@
+/* Pagina Video & Evenimente — cronologie Players. Foloseste token-urile din globals.css. */
+
+.video-hero {
+  padding: 56px 0 28px;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(1200px 400px at 50% -160px, rgba(245, 158, 11, 0.16), transparent 70%),
+    var(--bg);
+}
+
+.video-hero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.video-hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.video-hero__lead {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--text-soft);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.video-hero__stats {
+  display: flex;
+  gap: 14px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.video-stat {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 20px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--gold-soft);
+  min-width: 96px;
+}
+
+.video-stat strong {
+  font-size: 1.6rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.video-stat span {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 6px;
+}
+
+.video-section {
+  padding: 44px 0 12px;
+}
+
+.video-empty {
+  color: var(--text-faint);
+  text-align: center;
+  padding: 40px 0;
+}
+
+/* Timeline */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.timeline__item {
+  position: relative;
+  padding-left: 44px;
+  padding-bottom: 40px;
+}
+
+/* linia verticala care leaga nodurile */
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 6px;
+  bottom: -6px;
+  width: 2px;
+  background: linear-gradient(var(--line-strong), var(--line));
+}
+
+.timeline__item:last-child::before {
+  display: none;
+}
+
+.timeline__marker {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+}
+
+.timeline__dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px var(--gold-soft);
+}
+
+.timeline__card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+.timeline__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.timeline__date {
+  color: var(--text-faint);
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+}
+
+.timeline__chip {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--text-soft);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.timeline__chip--featured {
+  color: #08131f;
+  background: linear-gradient(135deg, #ffcf70, var(--gold));
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.timeline__title {
+  margin: 0 0 8px;
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.timeline__desc {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+.timeline__video {
+  width: 100%;
+  margin-top: 16px;
+  border-radius: var(--radius-md);
+  background: #000;
+  aspect-ratio: 16 / 9;
+  display: block;
+  border: 1px solid var(--line);
+}
+
+/* footer */
+.video-foot {
+  padding: 32px 0 64px;
+  border-top: 1px solid var(--line);
+  margin-top: 24px;
+}
+
+.video-foot p {
+  color: var(--text-soft);
+  margin: 0 0 16px;
+  max-width: 56ch;
+}
+
+.video-foot__links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .timeline__card {
+    padding: 16px;
+  }
+  .timeline__item {
+    padding-left: 36px;
+  }
+}
